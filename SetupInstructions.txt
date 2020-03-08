@@ -1,0 +1,11 @@
+How to get Setup with Wamp!
+
+Follow this Youtube video: https://www.youtube.com/watch?v=uElnLPyo2_A
+
+Summary:
+1. Download Wamp
+2. Double click on Wamp Shortcut to start services (green W in the tray means all services are running)
+3. Navigate to C:\wamp64\www folder
+4. Delete EVERYTHING in this "www" folder
+5. Create a new "index.html" or "index.php" file in that "www" folder
+6. This is the new default page being loaded when you go to "localhost" in your browser
