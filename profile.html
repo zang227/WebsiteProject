@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src = "areasOfInterest.js"></script>
+        <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bbootstrap.min.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+</html>
+
+<div class = "container">
+    <!--Title Row-->
+    <div class = "row mt-2 mb-2">
+        <div class = "col">
+            <h1><b>Profile</b></h2>
+        </div>
+    </div>
+    <!--Personal Information Card-->
+    <div class = "row">
+        <div class = "col">
+            <div class = "card">
+                <!--Title of Card Row-->
+                <div class = "row mt-3">
+                    <div class ="col-12">
+                        <h3 class ="ml-2"><b>Personal Information</b></h4>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <!--Username Row-->
+                <div class = "row">
+                    <div class = "col-6">
+                        <h5 class = "ml-2"><b>Username:</b></h5>
+                    </div>
+                    <div class = "col-6 ">
+                        <h5>acrabt1</h5>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <!--Email Row-->
+                <div class ="row">
+                    <div class ="col-6">
+                        <h5 class ="ml-2"><b>Email: </b></h5>
+                    </div>
+                    <div class = "col-6">
+                        <h5>acrabt1@lsu.edu</h5>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <!--Name Row-->
+                <div class="row">
+                    <div class = "col-6">
+                        <h5 class = "ml-2"><b>Name:</b></h5>
+                    </div>
+                    <div class= "col-6">
+                        <h5>Abigail Crabtree</h5>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <!--Phone number Row -->
+                <div class ="row">
+                    <div class= "col-6">
+                        <h5 class="ml-2"><b>Phone Number:</b></h5>
+                    </div>
+                    <div class="col-6">
+                        <h5>111-222-3333</h5>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <!--Address Row-->
+                <div class = "row">
+                    <div class="col-6">
+                        <h5 class = "ml-2"><b>Address:</b></h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>Street</h5>
+                            </div>
+                        </div>  
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>City, State, Zipcode</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <!--Edit Profile Information Button Row-->
+                <div class = "row mb-2">
+                    <div class="col-md-11 col-9"></div>
+                    <div class= "col-md-1 pl-md-1 col-1 ml-3 ml-md-0">
+                        <button class = "btn btn-info" style = "width: 4rem">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Areas of Interest Card and Documents Card Row-->
+    <div class= "row mt-3">
+        <!--Areas of Interest Card-->
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <!--Title of Card Row-->
+                <div class="row mt-3">
+                    <div class = "col">
+                        <h3 class="ml-2"><b>Areas of Interest</b></h3>
+                    </div> 
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <!--Their listed areas of interest-->
+                <div class = "row mb-3 ml-1">
+                    <div class = "col">
+                        <input type = "text" name = "interest" id = "newInterest"/>
+                        <input type = "button" value = "add"/>
+                        <ul id ="interestList"></ul>
+                        <!-- <td>
+                            <ul id ="interest"></ul>
+                            <input type = "text" name = "interest" id = "addInterest"/>
+                            <a onclick="addInterest();" value ="">add interest</a>
+                        </td> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Documents Card-->
+        <div class="col-12 col-md-6 mt-3 mt-md-0 mb-3">
+            <div class="card">
+                <!--Title of Card Row-->
+                <div class="row mt-3">
+                    <div class ="col">
+                        <h3 class="ml-2"><b>Documents</b></h3>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <!--Upload a document Row-->
+                <div class="row mb-2">
+                    <div class="col">
+                        <form>
+                            <input type ="file"/>
+                            <input type ="submit"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Register to receive emails-->
+    <div class="row mt-3 mb-3">
+        <div class="col">
+            <h4>Would you like to receive emails?</h4>
+            <button class = "btn btn-outline-success">Yes</button>
+            <button class = "btn btn-outline-danger">No</button>
+        </div>
+    </div>
+</div>
