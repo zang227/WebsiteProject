@@ -1,0 +1,75 @@
+<style>
+/* form */
+form{
+	border: 3px solid #4292e3;
+
+}
+
+/* input format for login*/
+input[type=text], 
+input[type=password] { 
+	width: 100%; 
+	padding: 12px 20px; 
+	margin: 8px 0; 
+	display: inline-block; 
+	border: 1px solid #ccc; 
+	box-sizing: border-box; 
+} 
+/* img style*/
+.img{
+	text-align: center; 
+	margin: auto; 
+}
+/*btn style*/ 
+button { 
+	background-color: #4292e3; 
+	color: white; 
+	padding: 12px 20px; 
+	margin: 8px 0; 
+	border: none; 
+	cursor: pointer; 
+	width: 100%; 
+} 
+/* hovering over buttom*/
+button:hover{
+	opacity: 1.0
+
+}
+/*cancel btn format*/
+.cancelBtn{
+	background-color: #4292e3;
+	float: left;
+	width: auto;
+	padding: 10px 18px; 
+	
+
+}
+/* format of login form*/
+.container{
+	position: absolute;
+	top: 10%;
+	left: 33%;
+
+	text-align: center;
+	margin: auto;
+	padding: 12px 12px;
+	width: 500px;
+	height: auto;
+	border-radius: 10px;
+	box-shadow: 0 0 10px gray;
+}
+.myCheckbox input {
+  position: relative;
+  z-index: -9999;
+}
+.myCheckbox span {
+
+  display: block;
+  background: url("link_to_image");
+}
+/*set the forgot password text*/ 
+span.psw { 
+	float: right; 
+	padding-top: 16px; 
+} 
+</style>
