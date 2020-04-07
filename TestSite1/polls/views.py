@@ -1,4 +1,21 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import render
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+
+
+def login(request):
+    return render(request, 'polls/login.html')
+
+def signup(request):
+    return render(request, 'polls/signup.html')
+
+def search(request):
+    return render(request, 'polls/search.html')
+
+def home(request):
+    return render(request, 'polls/home.html')
+
+def report(request):
+    return render(request, 'polls/report.html')
+
+def profile(request):
+    return render(request, 'polls/profile.html')
