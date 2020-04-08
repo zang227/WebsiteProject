@@ -1,4 +1,129 @@
-{% extends 'polls/base.html' %}
-{% block content %}
-    <h1>Report Page</h1>
-{% endblock content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bbootstrap.min.css"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+}
+th {
+  text-align: left;
+}
+</style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item ">
+          <a class="nav-link" href="home.html">Home </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="profile.html">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="search.html">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="report.html">Reports</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<h1> Stakeholder Report </h1>
+
+<h2> Current Employee Application List </h2>
+<table style="width:100%">
+  <tr>
+    <th>Applicant ID</th>
+    <th>Name</th>
+    <th>Last Name</th>
+    <th>Applicant Resume</th>
+    <th>Status of Application</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Timothy</td>
+    <td>Steudlein</td>
+    <td>Applicant Resume 1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Chase</td>
+    <td>Comardelle</td>
+    <td>Applicant Resume 2</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Abbie</td>
+    <td>Crabtree</td>
+    <td>Applicant Resume 3</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Roger</td>
+    <td>Zeringue</td>
+    <td>Applicant Resume 4</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Seth</td>
+    <td>Pottle</td>
+    <td>Applicant Resume 5</td>
+    <td>2</td>
+  </tr>
+</table
+
+<p>Percentage of Current Employees Hired for New Positions: 40%</p>
+
+<p></p>
+<h2>Companies with Greatest Number of Applicants</h2>
+<table style="width=100%">
+  <tr>
+    <td>Company ID</td>
+    <td>Company Name</td>
+    <td>Number of Applicants</td>
+  </tr>
+  <tr>
+    <td>34123</td>
+    <td>IBM</td>
+    <td>253</td>
+  </tr>
+  <tr>
+    <td>15739</td>
+    <td>Microsft</td>
+    <td>177</td>
+  </tr>
+  <tr>
+    <td>19482</td>
+    <td>Google</td>
+    <td>124</td>
+  </tr>
+  <tr>
+    <td>03756</td>
+    <td>Amazon</td>
+    <td>93</td>
+  </tr>
+  <tr>
+    <td>29401</td>
+    <td>Apple</td>
+    <td>56</td>
+  </tr>
+</table>
+
+<p>Job Field with the Greatest Number of Applicants: Software Developer</p>
+
+</body>
+</html>

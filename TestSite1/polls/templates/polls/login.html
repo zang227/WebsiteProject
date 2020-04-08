@@ -1,4 +1,84 @@
-{% extends 'polls/base.html' %}
-{% block content %}
-    <h1>Login Page</h1>
-{% endblock content %}
+<!DOCTYPE HTML>
+<!-- Ronny Sparks -->
+<html>
+
+<head>
+
+	<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="index.css" />
+        <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bbootstrap.min.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+       <!---- login form --->
+
+
+        <div class="container">
+        	<form action="/action_page.php" method="get">
+  <div class="img">
+  	<img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190710102234/download3.png"
+                 alt="Avatar" class="avatar">
+             </div>
+
+            <label><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+
+            <button type="submit" onclick="location.href='home.html'">Login</button>
+            <button type="submit">Sign up</button>
+            <label for="test">Remember me</label>
+<label class="myCheckbox">
+  <input type="checkbox" name="test" />
+  <span></span>
+</label>
+
+
+            <button type="button" class="cancelBtn">Cancel</button>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+
+
+<div class ="container">
+    <div class="row">
+        <div class="col justify-content-center">
+            <h1><b>Welcome!</b></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="row justify-content-center">
+                    <div class="col justify-content-center m-3 mb-0">
+                        <h2>Please select user type:</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col ml-3 mb-3">
+                        <button class = "btn btn-info ml-2 " onclick="location.href='login.html'">
+                            Non-Employeee Applicant
+                        </button>
+                        <button class = "btn btn-info ml-2" onclick="location.href='login.html'" >
+                            Employee Applicant
+                        </button>
+                        <button class = "btn btn-info ml-2" onclick="location.href='login.html'" >
+                            Manager
+                        </button>
+                        <button class = "btn btn-info ml-2" onclick="location.href='newUser.html'">
+                            New User
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+       <!---- login form --->
+
+
+</form>
+</body>
+</html>
