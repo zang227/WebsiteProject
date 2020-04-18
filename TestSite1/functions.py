@@ -21,3 +21,4 @@ def creatApplicant(firstName, lastName, email, password, address, resume, status
                    applicant_address=address,
                    applicant_resume=resume,
                    application_status=status, applicant_job=job)
+    a1.save()
