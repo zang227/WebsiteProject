@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Applicant
+from .models import Applicant, Employee
 
 
 
@@ -25,4 +25,5 @@ def report(request, applicant_id):
 
 def profile(request, applicant_id):
     applicant = get_object_or_404(Applicant, pk=applicant_id)
-    return render(request, 'polls/profile.html', {'applicant': applicant})
+    employee = Employee.objects.get(employee_email = applicant.applicant_email)
+    return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee})
