@@ -14,10 +14,10 @@
   <div class="container"> 
     <form action="" method="get">
   	  <h1>ROCA.sa</h1>
-            <label><b>Username</b></label> 
-            <input type="email" placeholder="Enter Email" name="email" required> 
+            <label><b>Email</b></label> 
+            <input type="text" placeholder="Enter Email" name="email" required> 
             <label><b>Password</b></label> 
-            <input type="password" placeholder="Enter Password" name="psw" required> 
+            <input type="password" placeholder="Enter Password" name="password" required> 
             <button type="submit">Login</button> 
             <button type="submit" onclick="location.href='/signup'">Applicant Sign Up</button> 
             <button type="submit" onclick ="location.href='/signup2'">Employee Sign Up</button>
@@ -37,6 +37,11 @@ input[type=password] {
   border: 1px solid #ccc; 
   box-sizing: border-box; 
 } 
+/* img style*/
+.img{
+  text-align: center; 
+  margin: auto; 
+}
 /*btn style*/ 
 button { 
   background-color: #4292e3; 
@@ -50,6 +55,15 @@ button {
 /* hovering over buttom*/
 button:hover{
   opacity: 1.0
+
+}
+/*cancel btn format*/
+.cancelBtn{
+  background-color: #4292e3;
+  float: left;
+  width: auto;
+  padding: 10px 18px; 
+  
 
 }
 /* format of login form*/
@@ -66,5 +80,18 @@ button:hover{
   border-radius: 10px;
   box-shadow: 0 0 10px gray;
 }
+.myCheckbox input {
+  position: relative;
+  z-index: -9999;
+}
+.myCheckbox span {
 
+  display: block;
+  background: url("link_to_image");
+}
+/*set the forgot password text*/ 
+span.psw { 
+  float: right; 
+  padding-top: 16px; 
+} 
 </style>
