@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+from .models import Applicant
 
 
 
@@ -14,11 +15,14 @@ def signup2(request):
 def search(request):
     return render(request, 'polls/search.html')
 
-def home(request):
-    return render(request, 'polls/home.html')
+def home(request, applicant_id):
+    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    return render(request, 'polls/home.html', {'applicant': applicant})
 
-def report(request):
-    return render(request, 'polls/report.html')
+def report(request, applicant_id):
+    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    return render(request, 'polls/report.html', {'applicant': applicant})
 
-def profile(request):
-    return render(request, 'polls/profile.html')
+def profile(request, applicant_id):
+    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    return render(request, 'polls/profile.html', {'applicant': applicant})
