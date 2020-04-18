@@ -8,6 +8,9 @@ def login(request):
 def signup(request):
     return render(request, 'polls/signup.html')
 
+def signup2(request):
+    return redner(request, 'polls/signup2.html')
+
 def search(request):
     return render(request, 'polls/search.html')
 

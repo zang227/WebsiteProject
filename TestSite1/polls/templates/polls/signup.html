@@ -1,4 +1,61 @@
-{% extends 'polls/base.html' %}
-{% block content %}
-    <h1>Signup Page</h1>
-{% endblock content %}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head> 
+</html>
+
+<body>
+    <div class="container">
+        <form action = "" method="post">
+            {% extends 'polls/base.html' %}
+            {% block content %}
+            <input type = "email" placeholder="Enter Email" name="email"/ required>
+            <input type ="password" placeholder="Enter a Password" name = "password" required/>
+            <input type ="file"/>
+            {% endblock content %}
+        </form>
+    </div>
+</body>
+<style>
+    /* input format for login*/
+    input[type=text], 
+    input[type=password] { 
+      width: 100%; 
+      padding: 12px 20px; 
+      margin: 8px 0; 
+      display: inline-block; 
+      border: 1px solid #ccc; 
+      box-sizing: border-box; 
+    } 
+    /*btn style*/ 
+    button { 
+      background-color: #4292e3; 
+      color: white; 
+      padding: 12px 20px; 
+      margin: 8px 0; 
+      border: none; 
+      cursor: pointer; 
+      width: 100%; 
+    } 
+    /* hovering over buttom*/
+    button:hover{
+      opacity: 1.0
+    
+    }
+    /* format of login form*/
+    .container{
+      position: absolute;
+      top: 10%;
+      left: 33%;
+    
+      text-align: center;
+      margin: auto;
+      padding: 12px 12px;
+      width: 500px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px gray;
+    }
