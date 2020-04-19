@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company, Job, Message
 from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, SearchJobForm
+from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, ApplyForm
 from django.contrib import messages
 from django.db.models import Q
 from django.http import *
@@ -95,6 +96,7 @@ def search(request, applicant_id):
                     return render(request, 'polls/search.html', {'applicant': applicant, 'form1': form1, 'job_list': job_list, 'job_results': job_results})
     #checks to see if applicant is employer because it will not display if they are not
     try:
+        form = ApplyForm()
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
         form1 = SearchJobForm()
         return render(request, 'polls/search.html', {'applicant': applicant, 'form1':form1, 'employee':employee, 'job_list': job_list})

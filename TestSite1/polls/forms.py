@@ -46,4 +46,6 @@ class MessageForm(forms.Form):
 class SearchJobForm(forms.Form):
     search = forms.CharField(required=True, max_length=100, label="Search Job or Qualifications")
 
+class ApplyForm(forms.Form):
+    job_title = forms.CharField()
         
