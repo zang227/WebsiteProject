@@ -1,7 +1,11 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company, Job, Message
+from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, SearchJobForm
 from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, ApplyForm
 from django.contrib import messages
+from django.db.models import Q
+from django.http import *
+
 
 
 
@@ -77,21 +81,28 @@ def search(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
     job_list = Job.objects.order_by('job_title')[:5]
+    #handles searching for jobs
     if request.method == 'POST':
-        form = ApplyForm(request.POST)
-        #if form.is_valid():
-            #text = form.cleaned_data['job_title']
-            #job_title = Job.objects.get(job_title = text)
-            #applicant.applicant_job.add(job_title)
-  
+        search = request.POST['search']
+        form1 = SearchJobForm(request.POST)
+        if search:
+            job_results = Job.objects.filter(Q(job_title__icontains = search) | Q(job_qualifications__icontains = search))
+            if job_results:
+                #checks to see if applicant is employer because it will not display if they are not
+                try:
+                    employee = Employee.objects.get(employee_email = applicant.applicant_email)
+                    return render(request, 'polls/search.html', {'applicant': applicant, 'form1':form1, 'employee':employee, 'job_list': job_list, 'job_results': job_results})
+                except Employee.DoesNotExist:
+                    return render(request, 'polls/search.html', {'applicant': applicant, 'form1': form1, 'job_list': job_list, 'job_results': job_results})
     #checks to see if applicant is employer because it will not display if they are not
     try:
         form = ApplyForm()
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
-        return render(request, 'polls/search.html', {'applicant': applicant, 'employee':employee, 'job_list': job_list, 'form':form})
+        form1 = SearchJobForm()
+        return render(request, 'polls/search.html', {'applicant': applicant, 'form1':form1, 'employee':employee, 'job_list': job_list})
     except Employee.DoesNotExist:
-        form = ApplyForm()
-        return render(request, 'polls/search.html', {'applicant': applicant, 'job_list': job_list, 'form':form})
+        form1=SearchJobForm()
+        return render(request, 'polls/search.html', {'applicant': applicant, 'form1':form1, 'job_list': job_list})
 
 def home(request, applicant_id):
     realId = decrypt(applicant_id)

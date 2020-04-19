@@ -43,6 +43,9 @@ class MessageForm(forms.Form):
     receiver_email = forms.CharField(label='Enter the Receiver\'s Email', required=True, max_length=100)
     message = forms.CharField(label='Your Message', required = True, max_length=500)
 
+class SearchJobForm(forms.Form):
+    search = forms.CharField(required=True, max_length=100, label="Search Job or Qualifications")
+
 class ApplyForm(forms.Form):
     job_title = forms.CharField()
         
