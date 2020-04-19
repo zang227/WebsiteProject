@@ -267,17 +267,17 @@
         <div class ="col-6">
             <div class="card">
                 <!--Title Row-->
-                <div class="row mt-2">
+                <div class="row m-2">
                     <div class="col">
                         <h3 class="ml-2"><b>Send a Message</b></h3>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row m-2">
                     <div class="col">
                         <form action="" method="post">
                             {% csrf_token %}
                             {{form.as_p}}
-                            <button type="submit" onclick="location.href='/home'">Send</button> 
+                            <button type="submit" onclick="location.href='/home/'">Send</button> 
                         </form>
                     </div>
                 </div>
@@ -285,3 +285,27 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* input format for login*/
+    input[type=text], 
+    input[type=password],
+    input[type=email] { 
+      width: 100%; 
+      padding: 12px 20px; 
+      margin: 8px 0; 
+      display: inline-block; 
+      border: 1px solid #ccc; 
+      box-sizing: border-box; 
+    } 
+    /*btn style*/ 
+    button { 
+      background-color: #4292e3; 
+      color: white; 
+      padding: 12px 20px; 
+      margin: 8px 0; 
+      border: none; 
+      cursor: pointer; 
+      width: 100%; 
+    } 
+    </style>

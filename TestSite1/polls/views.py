@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company, Job, Message
-from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm
+from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm
 from django.contrib import messages
 
 
@@ -97,19 +97,33 @@ def report(request, applicant_id):
 def profile(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            receiver_email = form.cleaned_data['receiver_email']
+            message = form.cleaned_data['message']
+            sender_email = applicant.applicant_email
+            t = Message(sender_email=sender_email, receiver_email=receiver_email, message=message)
+            t.save()
+        return redirect('/profile/'+str(applicant_id))
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
+        form = MessageForm()
         try: 
             messages = Message.objects.filter(receiver_email = applicant.applicant_email)
-            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee, 'messages': messages})
+            form = MessageForm()
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee, 'messages': messages, 'form':form})
         except Message.DoesNotExist:
-            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee})
+            form = MessageForm()
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee, 'form':form})
     except Employee.DoesNotExist:
         try:
+            form = MessageForm()
             messages = Message.objects.filter(receiver_email = applicant.applicant_email)
-            return render(request, 'polls/profile.html', {'applicant': applicant, 'messages': messages})
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'messages': messages, 'form':form})
         except Message.DoesNotExist:
-            return render(request, 'polls/profile.html', {'applicant': applicant})
+            form = MessageForm()
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'form':form})
 
 def editProfile(request, applicant_id):
     realId = decrypt(applicant_id)
@@ -126,7 +140,7 @@ def editProfile(request, applicant_id):
             address = form.cleaned_data['applicant_address']
             q = Applicant.objects.get(applicant_email = email)
             realId = decrypt(q.id)
-        return redirect('/profile/'+str(realId))
+        return redirect('/profile/'+str(applicant_id))
     else:
         form = editProfileForm(instance=update)
         return render(request, 'polls/editProfile.html', {'applicant': applicant, 'form':form})
