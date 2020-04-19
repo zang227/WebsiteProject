@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Applicant, Employee, Company, Job
+from .models import Applicant, Employee, Company, Job, Message
 from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm
 from django.contrib import messages
 
@@ -92,9 +92,17 @@ def profile(request, applicant_id):
     applicant = get_object_or_404(Applicant, pk=applicant_id)
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
-        return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee})
+        try: 
+            messages = Message.objects.filter(receiver_email = applicant.applicant_email)
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee, 'messages': messages})
+        except Message.DoesNotExist:
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee})
     except Employee.DoesNotExist:
-        return render(request, 'polls/profile.html', {'applicant': applicant})
+        try:
+            messages = Message.objects.filter(receiver_email = applicant.applicant_email)
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'messages': messages})
+        except Message.DoesNotExist:
+            return render(request, 'polls/profile.html', {'applicant': applicant})
 
 def editProfile(request, applicant_id):
     applicant = get_object_or_404(Applicant, pk=applicant_id)

@@ -49,3 +49,11 @@ class Applicant(models.Model):
     
     def __str__(self):
         return self.applicant_email
+
+class Message(models.Model):
+    sender_email = models.CharField(max_length=100)
+    receiver_email = models.CharField(max_length=100)
+    message = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.message
