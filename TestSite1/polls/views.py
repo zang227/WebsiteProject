@@ -25,6 +25,18 @@ def report(request, applicant_id):
     return render(request, 'polls/report.html', {'applicant': applicant})
 
 def profile(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    realid = decryptor(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realid)
     employee = Employee.objects.get(employee_email = applicant.applicant_email)
     return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee})
+    
+def decryptor (applicant_id):
+    id = ((((applicant_id - 3) / 2) + 6) / 65) / 5
+    return id
+
+
+
+
+
+def encryptor(id):
+    newid = ((((id * 5) * 65) - 6) * 2) + 3
