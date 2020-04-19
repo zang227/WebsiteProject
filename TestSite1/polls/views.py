@@ -49,8 +49,9 @@ def signup2(request):
         form2 = SignUpForm2()
         return render(request, 'polls/signup2.html', {'form1':form1, 'form2':form2})
 
-def search(request):
-    return render(request, 'polls/search.html')
+def search(request, applicant_id):
+    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    return render(request, 'polls/search.html', {'applicant': applicant})
 
 def home(request, applicant_id):
     applicant = get_object_or_404(Applicant, pk=applicant_id)
