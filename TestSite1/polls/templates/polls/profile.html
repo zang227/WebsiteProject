@@ -165,7 +165,9 @@
                 <div class = "row mb-3 ml-1">
                     <div class = "col">
                         {% if applicant.applicant_job %}
-							<h5>{{ applicant.applicant_job }}</h5>
+                            <h5>{{ applicant.applicant_job }}</h5>
+                        {% else %}
+                            <h5>You have no applied to any jobs.</h5>
 						{% endif %}
                     </div>
                 </div>
