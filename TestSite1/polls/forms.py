@@ -28,8 +28,15 @@ class editProfileForm(forms.ModelForm):
 
     class Meta: 
         model = Applicant
-        fields = ('applicant_email', 'applicant_name', 'applicant_last_name', 'applicant_address')
+        fields = ('applicant_email', 'applicant_name', 'applicant_last_name', 'applicant_address',)
 
+#create the form for loging in 
+class LoginForm(forms.ModelForm):
+    applicant_email = forms.EmailField(label='Email', required=True, max_length=100)
+    applicant_password = forms.CharField(label='Password', required=True, max_length=100, widget=forms.PasswordInput)
 
+    class Meta:
+        model = Applicant
+        fields = ('applicant_email','applicant_password',)
 
         

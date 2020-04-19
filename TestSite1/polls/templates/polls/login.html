@@ -12,12 +12,10 @@
 	
 
   <div class="container"> 
-    <form action="" method="get">
+    <form action="" method="post">
   	  <h1>ROCA.sa</h1>
-            <label><b>Email</b></label> 
-            <input type="text" placeholder="Enter Email" name="email" required> 
-            <label><b>Password</b></label> 
-            <input type="password" placeholder="Enter Password" name="password" required> 
+        {% csrf_token %}
+        {{form.as_p}}
             <button type="submit">Login</button> 
             <button type="submit" onclick="location.href='/signup'">Applicant Sign Up</button> 
             <button type="submit" onclick ="location.href='/signup2'">Employee Sign Up</button>
@@ -28,7 +26,7 @@
 
 <style>
 /* input format for login*/
-input[type=text], 
+input[type=email], 
 input[type=password] { 
   width: 100%; 
   padding: 12px 20px; 

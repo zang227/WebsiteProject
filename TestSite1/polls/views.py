@@ -1,11 +1,29 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company
-from .forms import SignUpForm, SignUpForm2, editProfileForm
+from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm
+from django.contrib import messages
 
 
 
 def login(request):
-    return render(request, 'polls/login.html')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['applicant_email']
+            password = form.cleaned_data['applicant_password']
+            if Applicant.objects.filter(applicant_email = email).exists():
+                q = Applicant.objects.get(applicant_email = email)
+                if q.applicant_password == password:
+                    return redirect('/home/'+str(q.id))
+                else:
+                    messages.error(request, 'Your password is incorrect.')
+                    return redirect('login-home')
+            else:
+                messages.error(request, 'Your email is not correct. If you are a new user, click sign up to sign up')
+                return redirect('login-home')
+    else:
+        form = LoginForm()
+        return render(request, 'polls/login.html', {'form': form})
 
 def signup(request):
     if request.method == 'POST':
