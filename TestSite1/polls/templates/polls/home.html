@@ -45,21 +45,25 @@
         </div>
       </div>
     </div>
-    <div class="col-4">
-      <div class="card">
-        <div class="row">
-          <div class="col text-center">
-            <h2><b>Reports</b></h2>
+    {% if employee %}
+      {% if employee.is_employer == "True" %}
+        <div class="col-4">
+          <div class="card">
+            <div class="row">
+              <div class="col text-center">
+                <h2><b>Reports</b></h2>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col text-center">
+                <button class = "btn btn-outline-info" onclick="location.href='/report'">
+                  Reports
+               </button>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="row mb-2">
-          <div class="col text-center">
-            <button class = "btn btn-outline-info" onclick="location.href='/report'">
-              Reports
-          </button>
-          </div>
-        </div>
-      </div>
-    </div>
+      {% endif %}
+    {% endif %}
   </div>
 </div>

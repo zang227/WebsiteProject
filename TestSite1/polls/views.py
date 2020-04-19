@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Applicant, Employee, Company
+from .models import Applicant, Employee, Company, Job
 from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm
 from django.contrib import messages
 
@@ -69,11 +69,20 @@ def signup2(request):
 
 def search(request, applicant_id):
     applicant = get_object_or_404(Applicant, pk=applicant_id)
-    return render(request, 'polls/search.html', {'applicant': applicant})
+    job_list = Job.objects.order_by('job_title')[:5]
+    try:
+        employee = Employee.objects.get(employee_email = applicant.applicant_email)
+        return render(request, 'polls/search.html', {'applicant': applicant, 'employee':employee, 'job_list': job_list})
+    except Employee.DoesNotExist:
+        return render(request, 'polls/search.html', {'applicant': applicant, 'job_list': job_list})
 
 def home(request, applicant_id):
     applicant = get_object_or_404(Applicant, pk=applicant_id)
-    return render(request, 'polls/home.html', {'applicant': applicant})
+    try:
+        employee = Employee.objects.get(employee_email = applicant.applicant_email)
+        return render(request, 'polls/home.html', {'applicant': applicant, 'employee':employee})
+    except Employee.DoesNotExist:
+        return render(request, 'polls/home.html', {'applicant': applicant})
 
 def report(request, applicant_id):
     applicant = get_object_or_404(Applicant, pk=applicant_id)
