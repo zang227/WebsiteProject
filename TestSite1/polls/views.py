@@ -6,6 +6,7 @@ from django.contrib import messages
 
 
 def login(request):
+    #handles once the login form is submitted 
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -27,6 +28,7 @@ def login(request):
         return render(request, 'polls/login.html', {'form': form})
 
 def signup(request):
+    #handles once the signup form is submitted
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -43,6 +45,7 @@ def signup(request):
         return render(request, 'polls/signup.html', {'form':form})
 
 def signup2(request):
+    #handles once the signup form is submitted 
     if request.method == 'POST':
         form1 = SignUpForm(request.POST)
         form2 = SignUpForm2(request.POST)
@@ -74,6 +77,7 @@ def search(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
     job_list = Job.objects.order_by('job_title')[:5]
+    #checks to see if applicant is employer because it will not display if they are not
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
         return render(request, 'polls/search.html', {'applicant': applicant, 'employee':employee, 'job_list': job_list})
@@ -83,6 +87,7 @@ def search(request, applicant_id):
 def home(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
+    #check to see if applicant is an administrator because it will not display reports option if they are not
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
         return render(request, 'polls/home.html', {'applicant': applicant, 'employee':employee})
@@ -97,6 +102,7 @@ def report(request, applicant_id):
 def profile(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
+    #handles what happens once a message is sent
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -106,6 +112,7 @@ def profile(request, applicant_id):
             t = Message(sender_email=sender_email, receiver_email=receiver_email, message=message)
             t.save()
         return redirect('/profile/'+str(applicant_id))
+    #checks if they are an employee or employer or if they have messages because if they are not some things will not be displayed
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
         form = MessageForm()
@@ -129,7 +136,7 @@ def editProfile(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
     update = Applicant.objects.get(id = realId)
-
+    #handles the changes to the profile once the editprofile page is submitted 
     if request.method == 'POST':
         form = editProfileForm(request.POST, instance=update)
         if form.is_valid():
