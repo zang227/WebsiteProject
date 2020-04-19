@@ -11,21 +11,9 @@
     <div class="container">
         <form action = "" method="post">
             <h1>ROCA.sa</h1>
-            <label><b>Email</b></label>
-            <input type = "email" placeholder="Enter Email" name="email" maxlength="100" required/>
-            <label><b>Create a Password</b></label>
-            <input type ="password" placeholder="Create a Password" name = "password" maxlength ="100" required/>
-            <label><b>First Name</b></label>
-            <input type="text" placeholder="Enter First Name" name ="firstName" maxlength="100" required/>
-            <label><b>Last Name</b></label>
-            <input type ="text" placeholder="Enter Last Name" name="lastName" maxlength="100" required/> 
-            <label><b>Company Name:</b></label>
-            <input type="text" placeholder="Enter Your Company" name="companyName" maxlength="100" required/>
-            <label for = "employer"><b>Are you an employer?</b></label>
-            <select id="employer">
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-            </select>
+            {% csrf_token %}
+            {{form1.as_p}}
+            {{form2.as_p}}
             <button type="submit" onclick="location.href='/home'">Sign Up</button> 
         </form>
     </div>
@@ -73,12 +61,13 @@
     }
     /* format of login form*/
     .container{
-      position: absolute;
+      position: sticky;
       top: 10%;
       left: 33%;
       text-align: center;
       margin: auto;
       padding: 12px 12px;
+      padding-bottom: 10px;
       width: 500px;
       height: auto;
       border-radius: 10px;
