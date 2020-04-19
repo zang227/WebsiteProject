@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company, Job, Message
-from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm
+from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, ApplyForm
 from django.contrib import messages
 
 
@@ -77,12 +77,21 @@ def search(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
     job_list = Job.objects.order_by('job_title')[:5]
+    if request.method == 'POST':
+        form = ApplyForm(request.POST)
+        #if form.is_valid():
+            #text = form.cleaned_data['job_title']
+            #job_title = Job.objects.get(job_title = text)
+            #applicant.applicant_job.add(job_title)
+  
     #checks to see if applicant is employer because it will not display if they are not
     try:
+        form = ApplyForm()
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
-        return render(request, 'polls/search.html', {'applicant': applicant, 'employee':employee, 'job_list': job_list})
+        return render(request, 'polls/search.html', {'applicant': applicant, 'employee':employee, 'job_list': job_list, 'form':form})
     except Employee.DoesNotExist:
-        return render(request, 'polls/search.html', {'applicant': applicant, 'job_list': job_list})
+        form = ApplyForm()
+        return render(request, 'polls/search.html', {'applicant': applicant, 'job_list': job_list, 'form':form})
 
 def home(request, applicant_id):
     realId = decrypt(applicant_id)
