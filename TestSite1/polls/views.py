@@ -13,8 +13,9 @@ def login(request):
             password = form.cleaned_data['applicant_password']
             if Applicant.objects.filter(applicant_email = email).exists():
                 q = Applicant.objects.get(applicant_email = email)
+                realId = decrypt(q.id)
                 if q.applicant_password == password:
-                    return redirect('/home/'+str(q.id))
+                    return redirect('/home/'+str(realId))
                 else:
                     messages.error(request, 'Your password is incorrect.')
                     return redirect('login-home')
@@ -35,7 +36,8 @@ def signup(request):
             firstName = form.cleaned_data['applicant_name']
             lastName = form.cleaned_data['applicant_last_name']
             q = Applicant.objects.get(applicant_email = email)
-        return redirect('/home/'+str(q.id))
+            realId = decrypt(q.id)
+        return redirect('/home/'+str(realId))
     else:
         form = SignUpForm()
         return render(request, 'polls/signup.html', {'form':form})
@@ -57,7 +59,8 @@ def signup2(request):
                 t = Employee(employee_name = firstName, employee_last_name=lastName, employee_email=email, employee_company=r, is_employer=is_employer)
                 t.save()
                 q = Applicant.objects.get(applicant_email = email)
-            return redirect('/home/'+str(q.id))
+                realId = decrypt(q.id)
+            return redirect('/home/'+str(realId))
         else:
             form1 = SignUpForm()
             form2 = SignUpForm2()
@@ -122,7 +125,8 @@ def editProfile(request, applicant_id):
             lastName = form.cleaned_data['applicant_last_name']
             address = form.cleaned_data['applicant_address']
             q = Applicant.objects.get(applicant_email = email)
-        return redirect('/profile/'+str(q.id))
+            realId = decrypt(q.id)
+        return redirect('/profile/'+str(realId))
     else:
         form = editProfileForm(instance=update)
         return render(request, 'polls/editProfile.html', {'applicant': applicant, 'form':form})

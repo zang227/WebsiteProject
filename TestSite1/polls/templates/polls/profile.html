@@ -231,6 +231,7 @@
                     </div>
                 </div>
                 <hr class= "ml-2 mr-2"/>
+                <!--Messages Row-->
                 {% for message in messages %}
                     <div class = "row">
                         <div class="col">
@@ -244,6 +245,26 @@
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+        </div>
+        <!--Send Messages-->
+        <div class ="col-6">
+            <div class="card">
+                <!--Title Row-->
+                <div class="row mt-2">
+                    <div class="col">
+                        <h3 class="ml-2"><b>Send a Message</b></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <button type="submit" onclick="location.href='/home'">Send</button> 
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
