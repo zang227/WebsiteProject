@@ -16,24 +16,36 @@
 	}
 </style>
 </html>
-<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-	<div class="collapse navbar-collapse" id="navbarNav">
-		<ul class="navbar-nav">
-			<li class="nav-item ">
-				<a class="nav-link" href="/home">Home </a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/profile">Profile</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/search">Search</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/report">Reports</a>
-			</li>
-		</ul>
-	</div>
-</nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item ">
+          <a id ="nav1"  class="nav-link" href="#">Home </a>
+        </li>
+        <li class="nav-item">
+          <a id ="nav2" class="nav-link" href="">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a id="nav3" class="nav-link" href="">Search</a>
+        </li>
+        <li class="nav-item">
+          <a id="nav4" class="nav-link" href="">Reports</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<script>
+ document.getElementById("nav1").href = "/home/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ 
+ document.getElementById("nav2").href = "/profile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ 
+ document.getElementById("nav3").href = "/search/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ 
+ document.getElementById("nav4").href = "/report/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ 
+
+</script>
 <div class="container">
 	{% if applicant.applicant_resume == "" %}
 		<div class = "row">
