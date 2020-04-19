@@ -6,11 +6,11 @@
     </head>
 </html>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item ">
-          <a id ="nav1"  class="nav-link" href="#">Home </a>
+ <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item ">
+          <a id ="nav1"  class="nav-link" href="">Home </a>
         </li>
         <li class="nav-item">
           <a id ="nav2" class="nav-link" href="">Profile</a>
@@ -21,9 +21,11 @@
         <li class="nav-item">
           <a id="nav4" class="nav-link" href="">Reports</a>
         </li>
-      </ul>
-    </div>
-  </nav>
+      </li>
+    </ul>
+    <h1>Profile</h1>
+  </div>
+</nav>
 
 <script>
  document.getElementById("nav1").href = "/home/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
@@ -177,7 +179,7 @@
                 <div class = "row mb-3 ml-1">
                     <div class = "col">
                         {% if applicant.applicant_job %}
-                            <h5>{{ applicant.applicant_job }}</h5>
+							<h5>{{ applicant.applicant_job }}</h5>
                         {% else %}
                             <h5>You have no applied to any jobs.</h5>
 						{% endif %}
@@ -319,4 +321,11 @@ document.getElementById("btn2").href = "/profile/" + (((((({{applicant.id}}) * 5
       cursor: pointer; 
       width: 100%; 
     } 
+    h1 { text-align: center;
+    width: 20em
+    margin-left: auto;
+    margin-right: auto; 
+    padding-left: 400px;
+    color: white;
+     }
     </style>
