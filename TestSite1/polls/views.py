@@ -12,8 +12,9 @@ def signup(request):
 def signup2(request):
     return render(request, 'polls/signup2.html')
 
-def search(request):
-    return render(request, 'polls/search.html')
+def search(request, applicant_id):
+    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    return render(request, 'polls/search.html', {'applicant': applicant})
 
 def home(request, applicant_id):
     applicant = get_object_or_404(Applicant, pk=applicant_id)
