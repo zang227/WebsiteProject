@@ -79,10 +79,10 @@ def search(request, applicant_id):
     job_list = Job.objects.order_by('job_title')[:5]
     if request.method == 'POST':
         form = ApplyForm(request.POST)
-        #if form.is_valid():
-            #text = form.cleaned_data['job_title']
-            #job_title = Job.objects.get(job_title = text)
-            #applicant.applicant_job.add(job_title)
+        if form.is_valid():
+            text = form.cleaned_data['job_title']
+            thejob = Job.objects.get(job_title = text)
+            applicant.applicant_job.add(thejob)
   
     #checks to see if applicant is employer because it will not display if they are not
     try:
