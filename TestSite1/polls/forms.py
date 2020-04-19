@@ -1,5 +1,5 @@
 from django import forms
-from .models import Applicant, Employee
+from .models import Applicant, Employee, Message
 
 
 #create the form for signing up as an applicant
@@ -38,5 +38,9 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model = Applicant
         fields = ('applicant_email','applicant_password',)
+
+class MessageForm(forms.Form):
+    receiver_email = forms.CharField(label='Enter the Receiver\'s Email', required=True, max_length=100)
+    message = forms.CharField(label='Your Message', required = True, max_length=500)
 
         

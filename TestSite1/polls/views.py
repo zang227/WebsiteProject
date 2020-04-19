@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Applicant, Employee, Company
-from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm
+from .models import Applicant, Employee, Company, Job, Message
+from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm
 from django.contrib import messages
 
 
 
 def login(request):
+    #handles once the login form is submitted 
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -13,8 +14,9 @@ def login(request):
             password = form.cleaned_data['applicant_password']
             if Applicant.objects.filter(applicant_email = email).exists():
                 q = Applicant.objects.get(applicant_email = email)
+                realId = decrypt(q.id)
                 if q.applicant_password == password:
-                    return redirect('/home/'+str(q.id))
+                    return redirect('/home/'+str(realId))
                 else:
                     messages.error(request, 'Your password is incorrect.')
                     return redirect('login-home')
@@ -26,6 +28,7 @@ def login(request):
         return render(request, 'polls/login.html', {'form': form})
 
 def signup(request):
+    #handles once the signup form is submitted
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -35,12 +38,14 @@ def signup(request):
             firstName = form.cleaned_data['applicant_name']
             lastName = form.cleaned_data['applicant_last_name']
             q = Applicant.objects.get(applicant_email = email)
-        return redirect('/home/'+str(q.id))
+            realId = decrypt(q.id)
+        return redirect('/home/'+str(realId))
     else:
         form = SignUpForm()
         return render(request, 'polls/signup.html', {'form':form})
 
 def signup2(request):
+    #handles once the signup form is submitted 
     if request.method == 'POST':
         form1 = SignUpForm(request.POST)
         form2 = SignUpForm2(request.POST)
@@ -57,7 +62,8 @@ def signup2(request):
                 t = Employee(employee_name = firstName, employee_last_name=lastName, employee_email=email, employee_company=r, is_employer=is_employer)
                 t.save()
                 q = Applicant.objects.get(applicant_email = email)
-            return redirect('/home/'+str(q.id))
+                realId = decrypt(q.id)
+            return redirect('/home/'+str(realId))
         else:
             form1 = SignUpForm()
             form2 = SignUpForm2()
@@ -68,29 +74,69 @@ def signup2(request):
         return render(request, 'polls/signup2.html', {'form1':form1, 'form2':form2})
 
 def search(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
-    return render(request, 'polls/search.html', {'applicant': applicant})
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
+    job_list = Job.objects.order_by('job_title')[:5]
+    #checks to see if applicant is employer because it will not display if they are not
+    try:
+        employee = Employee.objects.get(employee_email = applicant.applicant_email)
+        return render(request, 'polls/search.html', {'applicant': applicant, 'employee':employee, 'job_list': job_list})
+    except Employee.DoesNotExist:
+        return render(request, 'polls/search.html', {'applicant': applicant, 'job_list': job_list})
 
 def home(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
-    return render(request, 'polls/home.html', {'applicant': applicant})
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
+    #check to see if applicant is an administrator because it will not display reports option if they are not
+    try:
+        employee = Employee.objects.get(employee_email = applicant.applicant_email)
+        return render(request, 'polls/home.html', {'applicant': applicant, 'employee':employee})
+    except Employee.DoesNotExist:
+        return render(request, 'polls/home.html', {'applicant': applicant})
 
 def report(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
     return render(request, 'polls/report.html', {'applicant': applicant})
 
 def profile(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
+    #handles what happens once a message is sent
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            receiver_email = form.cleaned_data['receiver_email']
+            message = form.cleaned_data['message']
+            sender_email = applicant.applicant_email
+            t = Message(sender_email=sender_email, receiver_email=receiver_email, message=message)
+            t.save()
+        return redirect('/profile/'+str(applicant_id))
+    #checks if they are an employee or employer or if they have messages because if they are not some things will not be displayed
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
-        return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee})
+        form = MessageForm()
+        try: 
+            messages = Message.objects.filter(receiver_email = applicant.applicant_email)
+            form = MessageForm()
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee, 'messages': messages, 'form':form})
+        except Message.DoesNotExist:
+            form = MessageForm()
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee, 'form':form})
     except Employee.DoesNotExist:
-        return render(request, 'polls/profile.html', {'applicant': applicant})
+        try:
+            form = MessageForm()
+            messages = Message.objects.filter(receiver_email = applicant.applicant_email)
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'messages': messages, 'form':form})
+        except Message.DoesNotExist:
+            form = MessageForm()
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'form':form})
 
 def editProfile(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
-    update = Applicant.objects.get(id = applicant_id)
-
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
+    update = Applicant.objects.get(id = realId)
+    #handles the changes to the profile once the editprofile page is submitted 
     if request.method == 'POST':
         form = editProfileForm(request.POST, instance=update)
         if form.is_valid():
@@ -100,9 +146,18 @@ def editProfile(request, applicant_id):
             lastName = form.cleaned_data['applicant_last_name']
             address = form.cleaned_data['applicant_address']
             q = Applicant.objects.get(applicant_email = email)
-        return redirect('/profile/'+str(q.id))
+            realId = decrypt(q.id)
+        return redirect('/profile/'+str(applicant_id))
     else:
         form = editProfileForm(instance=update)
         return render(request, 'polls/editProfile.html', {'applicant': applicant, 'form':form})
+        
+        
+#encryption (id * 59) + 36 ) * 120 ) - 14 ) * 298)
+
+def decrypt(did):
+    decryptid = did
+    realid = ((((decryptid / 298) + 14) / 120) - 36) / 59
+    return realid
 
     

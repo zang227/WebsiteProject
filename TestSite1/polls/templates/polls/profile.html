@@ -10,20 +10,32 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item ">
-          <a class="nav-link" href="/home">Home </a>
+          <a id ="nav1"  class="nav-link" href="#">Home </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/profile">Profile</a>
+          <a id ="nav2" class="nav-link" href="">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/search">Search</a>
+          <a id="nav3" class="nav-link" href="">Search</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/report">Reports</a>
+          <a id="nav4" class="nav-link" href="">Reports</a>
         </li>
       </ul>
     </div>
   </nav>
+
+<script>
+ document.getElementById("nav1").href = "/home/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ 
+ document.getElementById("nav2").href = "/profile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ 
+ document.getElementById("nav3").href = "/search/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ 
+ document.getElementById("nav4").href = "/report/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ 
+
+</script>
 
 <div class = "container">
     <!--Title Row-->
@@ -164,7 +176,11 @@
                 <!--Their listed applications-->
                 <div class = "row mb-3 ml-1">
                     <div class = "col">
-                        
+                        {% if applicant.applicant_job %}
+                            <h5>{{ applicant.applicant_job }}</h5>
+                        {% else %}
+                            <h5>You have no applied to any jobs.</h5>
+						{% endif %}
                     </div>
                 </div>
             </div>
@@ -220,12 +236,76 @@
         </div>
     </div>
     </div>
-    <!--Register to receive emails-->
+    <!--Message Board-->
     <div class="row mt-3 mb-3">
-        <div class="col">
-            <h4>Would you like to receive emails?</h4>
-            <button class = "btn btn-outline-success">Yes</button>
-            <button class = "btn btn-outline-danger">No</button>
+        <div class = "col-6">
+            <div class="card">
+                <!--Title Row-->
+                <div class="row mt-2">
+                    <div class="col">
+                        <h3 class="ml-2"><b>Your Messages</b></h3>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <!--Messages Row-->
+                {% for message in messages %}
+                    <div class = "row">
+                        <div class="col">
+                            <h6 class="ml-2"><b>From: {{message.sender_email}}</b></h6>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col">
+                            <p class="ml-2">{{message.message}}</p>
+                            <hr class= "ml-2 mr-2"/>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!--Send Messages-->
+        <div class ="col-6">
+            <div class="card">
+                <!--Title Row-->
+                <div class="row m-2">
+                    <div class="col">
+                        <h3 class="ml-2"><b>Send a Message</b></h3>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <button type="submit" onclick="location.href='/home/'">Send</button> 
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    /* input format for login*/
+    input[type=text], 
+    input[type=password],
+    input[type=email] { 
+      width: 100%; 
+      padding: 12px 20px; 
+      margin: 8px 0; 
+      display: inline-block; 
+      border: 1px solid #ccc; 
+      box-sizing: border-box; 
+    } 
+    /*btn style*/ 
+    button { 
+      background-color: #4292e3; 
+      color: white; 
+      padding: 12px 20px; 
+      margin: 8px 0; 
+      border: none; 
+      cursor: pointer; 
+      width: 100%; 
+    } 
+    </style>
