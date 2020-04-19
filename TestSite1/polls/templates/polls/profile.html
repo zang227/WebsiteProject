@@ -131,9 +131,9 @@
                 <div class = "row mb-2">
                     <div class="col-md-11 col-9"></div>
                     <div class= "col-md-1 pl-md-1 col-1 ml-3 ml-md-0">
-                        <button class = "btn btn-info" style = "width: 4rem" type="submit" onclick="location.href='/editProfile'">
-                            Edit
-                        </button>
+                        <a id="btn1" href="">
+								<input class = "btn btn-info" style = "width: 4rem" type ="submit"value="Edit" />
+						</a> 
                     </div>
                 </div>
                 <!--If it they are an applicant-->
@@ -151,9 +151,9 @@
                 <div class = "row mb-2">
                     <div class="col-md-11 col-9"></div>
                     <div class= "col-md-1 pl-md-1 col-1 ml-3 ml-md-0">
-                        <button class = "btn btn-info" style = "width: 4rem" type ="submit" onclick="location.href='/editProfile'">
-                            Edit
-                        </button>
+						<a id="btn1" href="">
+								<input class = "btn btn-info" style = "width: 4rem" type ="submit"value="Edit" />
+						</a> 
                     </div>
                 </div>
                 {% endif %}
@@ -277,7 +277,9 @@
                         <form action="" method="post">
                             {% csrf_token %}
                             {{form.as_p}}
-                            <button type="submit" onclick="location.href='/home/'">Send</button> 
+                            <a id="btn2" href="">
+								<input type="submit" value="Send" />
+							</a> 
                         </form>
                     </div>
                 </div>
@@ -285,6 +287,15 @@
         </div>
     </div>
 </div>
+
+
+<script>
+document.getElementById("btn1").href = "/editProfile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ 
+document.getElementById("btn2").href = "/profile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+
+ 
+</script>
 
 <style>
     /* input format for login*/
