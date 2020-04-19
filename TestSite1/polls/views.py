@@ -68,7 +68,8 @@ def signup2(request):
         return render(request, 'polls/signup2.html', {'form1':form1, 'form2':form2})
 
 def search(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
     job_list = Job.objects.order_by('job_title')[:5]
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
@@ -77,7 +78,8 @@ def search(request, applicant_id):
         return render(request, 'polls/search.html', {'applicant': applicant, 'job_list': job_list})
 
 def home(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
         return render(request, 'polls/home.html', {'applicant': applicant, 'employee':employee})
@@ -85,11 +87,13 @@ def home(request, applicant_id):
         return render(request, 'polls/home.html', {'applicant': applicant})
 
 def report(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
     return render(request, 'polls/report.html', {'applicant': applicant})
 
 def profile(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
         try: 
@@ -105,8 +109,9 @@ def profile(request, applicant_id):
             return render(request, 'polls/profile.html', {'applicant': applicant})
 
 def editProfile(request, applicant_id):
-    applicant = get_object_or_404(Applicant, pk=applicant_id)
-    update = Applicant.objects.get(id = applicant_id)
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
+    update = Applicant.objects.get(id = realId)
 
     if request.method == 'POST':
         form = editProfileForm(request.POST, instance=update)
@@ -121,5 +126,13 @@ def editProfile(request, applicant_id):
     else:
         form = editProfileForm(instance=update)
         return render(request, 'polls/editProfile.html', {'applicant': applicant, 'form':form})
+        
+        
+#encryption (id * 59) + 36 ) * 120 ) - 14 ) * 298)
+
+def decrypt(did):
+    decryptid = did
+    realid = ((((decryptid / 298) + 14) / 120) - 36) / 59
+    return realid
 
     
