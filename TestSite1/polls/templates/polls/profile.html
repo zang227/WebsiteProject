@@ -106,11 +106,11 @@
                         </div>
                         {% if employee.is_employer == "True" %}
                             <div class="col-6">
-                                <h5 class="ml-2">Employer</h5>
+                                <h5>Employer</h5>
                             </div>
                         {% else %}
                             <div class="col-6">
-                                <h5 class="ml-2">Employee</h5>
+                                <h5 >Employee</h5>
                             </div>
                         {% endif %}
                     </div>
@@ -130,8 +130,8 @@
                         <div class="col-6">
                             <h5 class="ml-2"><b>User Type:</b></h5>
                         </div>
-                        <div class="row">
-                            <h5 class="ml-2">Applicant</h5>
+                        <div class="col-6">
+                            <h5>Applicant</h5>
                         </div>
                     </div>
                     <hr class= "ml-2 mr-2"/>
@@ -150,9 +150,9 @@
         </div>
     </div>
     <!--Applied Jobs Card and Documents Card Row-->
-    <div class= "row mt-3">
+    <div class= "row mt-3 mb-3">
         <!--Applied Jobs Card-->
-        <div class="col-12 col-md-6">
+        <div class="col-12">
             <div class="card">
                 <!--Title of Card Row-->
                 <div class="row mt-3">
@@ -169,8 +169,10 @@
                 </div>
             </div>
         </div>
+    </div>
         <!--Documents Card-->
-        <div class="col-12 col-md-6 mt-3 mt-md-0 mb-3">
+        <div class ="row">
+        <div class="col-12 mt-3 mt-md-0 mb-3">
             <div class="card">
                 <!--Title of Card Row-->
                 <div class="row mt-3">
@@ -180,21 +182,43 @@
                 </div>
                 <hr class= "ml-2 mr-2"/>
                 <div class="row mt-1 mb-2">
-                    <div class="col">
-                        <h5 class="ml-2">Upload your resume in PDF format.</h5>
-                    </div>
-                </div>
-                <!--Upload a document Row-->
-                <div class="row mb-2">
-                    <div class="col">
-                        <form>
-                            <input type ="file" accept=".pdf"/>
-                            <input type ="submit"/>
-                        </form>
-                    </div>
-                </div>
+                    {% if applicant.applicant_resume != "" %}
+                        <div class="row mt-1 mb-2 ml-2"> 
+                            <div class="col">
+                                <h5>{{applicant.applicant_resume}}</h5>
+                            </div>
+                        </div>
+                        <hr class= "ml-2 mr-2"/>
+                        <div class="row mt-1 mb-2">
+                            <div class="col">
+                                <h5 class="ml-2">Upload new resume in PDF format.</h5>
+                            </div>
+                        </div>
+                        <div class = "row mt-1 mb-2 ml-2">
+                            <div class="col">
+                                <input type ="file" accept=".pdf"/>
+                                <input type ="submit" value="Update"/>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row mb-2 ml-3">
+                            <div class="col">
+                                <h5 class="ml-2">Upload your resume in PDF format.</h5>
+                            </div>
+                            </div>
+                        <!--Upload a document Row-->
+                        <div class="row mt-1 mb-2 ml-2">
+                            <div class="col">
+                                <form>
+                                    <input type ="file" accept=".pdf"/>
+                                    <input type ="submit"/>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
             </div>
         </div>
+    </div>
     </div>
     <!--Register to receive emails-->
     <div class="row mt-3 mb-3">
