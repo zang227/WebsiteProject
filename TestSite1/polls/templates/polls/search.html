@@ -90,15 +90,22 @@
 									<th scope="col">Company</th>
 									<th scope="col">Qualifications</th>
 									<th scope="col">Date Posted</th>
+									<th scope="col">Click to Apply</th>
 								</tr>
 							</thead>
 							<tbody>
 								{% for job in job_list %}
-									<tr>
+									<tr><form action="" method="post">
 										<td>{{job.job_title}}</td>
 										<td>{{job.job_company}}</td>
 										<td>{{job.job_qualifications}}</td>
 										<td>{{job.job_date}}</td>
+										<td>{% csrf_token %}
+											{{form.as_p}}
+											<a id="btn2" href="">
+											<input type="submit" name="job_id" value="Apply" />
+											</a> 
+										</td></form>
 									</tr>
 								{% endfor %}
 							</tbody>

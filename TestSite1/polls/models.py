@@ -50,7 +50,7 @@ class Applicant(models.Model):
     applicant_address = models.CharField(max_length=100)
     applicant_resume = models.CharField(max_length=1000)
     application_status = models.CharField(max_length=100)
-    applicant_job = models.ForeignKey('Job', null=True, on_delete=models.SET_NULL)
+    applicant_job = models.ManyToManyField('Job')
     
     def __str__(self):
         return self.applicant_email
