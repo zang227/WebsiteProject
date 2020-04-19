@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company
-from .forms import SignUpForm, SignUpForm2
+from .forms import SignUpForm, SignUpForm2, editProfileForm
 
 
 
@@ -12,10 +12,10 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            # email = form.cleaned_data['applicant_email']
-            # password = form.cleaned_data['applicant_password']
-            # firstName = form.cleaned_data['applicant_name']
-            # lastName = form.cleaned_data['applicant_last_name']
+            email = form.cleaned_data['applicant_email']
+            password = form.cleaned_data['applicant_password']
+            firstName = form.cleaned_data['applicant_name']
+            lastName = form.cleaned_data['applicant_last_name']
             q = Applicant.objects.get(applicant_email = email)
         return redirect('/home/'+str(q.id))
     else:
@@ -68,4 +68,23 @@ def profile(request, applicant_id):
         return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee})
     except Employee.DoesNotExist:
         return render(request, 'polls/profile.html', {'applicant': applicant})
+
+def editProfile(request, applicant_id):
+    applicant = get_object_or_404(Applicant, pk=applicant_id)
+    update = Applicant.objects.get(id = applicant_id)
+
+    if request.method == 'POST':
+        form = editProfileForm(request.POST, instance=update)
+        if form.is_valid():
+            form.save()
+            email = form.cleaned_data['applicant_email']
+            firstName = form.cleaned_data['applicant_name']
+            lastName = form.cleaned_data['applicant_last_name']
+            address = form.cleaned_data['applicant_address']
+            q = Applicant.objects.get(applicant_email = email)
+        return redirect('/profile/'+str(q.id))
+    else:
+        form = editProfileForm(instance=update)
+        return render(request, 'polls/editProfile.html', {'applicant': applicant, 'form':form})
+
     

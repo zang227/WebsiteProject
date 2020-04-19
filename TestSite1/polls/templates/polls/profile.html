@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src = "areasOfInterest.js"></script>
-        <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bbootstrap.min.css"/>
+        <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
 </html>
@@ -88,6 +87,7 @@
                     </div>
                 </div>
                 <hr class= "ml-2 mr-2"/>
+                <!--If they are an employee-->
                 {% if employee %}
                 <!--Company Row-->
                     <div class="row">
@@ -106,40 +106,52 @@
                         </div>
                         {% if employee.is_employer == "True" %}
                             <div class="col-6">
-                                <h5>Employer</h5>
+                                <h5 class="ml-2">Employer</h5>
                             </div>
                         {% else %}
                             <div class="col-6">
-                                <h5>Employee</h5>
+                                <h5 class="ml-2">Employee</h5>
                             </div>
                         {% endif %}
                     </div>
+                    <hr class= "ml-2 mr-2"/>
+                <!--Edit Profile Information Button Row-->
+                <div class = "row mb-2">
+                    <div class="col-md-11 col-9"></div>
+                    <div class= "col-md-1 pl-md-1 col-1 ml-3 ml-md-0">
+                        <button class = "btn btn-info" style = "width: 4rem" type="submit" onclick="location.href='/editProfile'">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+                <!--If it they are an applicant-->
                 {% else %}
                     <div class="row">
                         <div class="col-6">
                             <h5 class="ml-2"><b>User Type:</b></h5>
                         </div>
                         <div class="row">
-                            <h5>Applicant</h5>
+                            <h5 class="ml-2">Applicant</h5>
                         </div>
                     </div>
-                {% endif %}
-                <hr class= "ml-2 mr-2"/>
+                    <hr class= "ml-2 mr-2"/>
                 <!--Edit Profile Information Button Row-->
                 <div class = "row mb-2">
                     <div class="col-md-11 col-9"></div>
                     <div class= "col-md-1 pl-md-1 col-1 ml-3 ml-md-0">
-                        <button class = "btn btn-info" style = "width: 4rem">
+                        <button class = "btn btn-info" style = "width: 4rem" type ="submit" onclick="location.href='/editProfile'">
                             Edit
                         </button>
                     </div>
                 </div>
+                {% endif %}
+                
             </div>
         </div>
     </div>
-    <!--Areas of Interest Card and Documents Card Row-->
+    <!--Applied Jobs Card and Documents Card Row-->
     <div class= "row mt-3">
-        <!--Areas of Interest Card-->
+        <!--Applied Jobs Card-->
         <div class="col-12 col-md-6">
             <div class="card">
                 <!--Title of Card Row-->
@@ -149,7 +161,7 @@
                     </div>
                 </div>
                 <hr class= "ml-2 mr-2"/>
-                <!--Their listed areas of interest-->
+                <!--Their listed applications-->
                 <div class = "row mb-3 ml-1">
                     <div class = "col">
                         
