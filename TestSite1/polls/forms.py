@@ -1,5 +1,5 @@
 from django import forms
-from .models import Applicant, Employee
+from .models import Applicant, Employee, Message
 
 
 #create the form for signing up as an applicant
