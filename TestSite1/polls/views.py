@@ -14,7 +14,7 @@ def login(request):
             password = form.cleaned_data['applicant_password']
             if Applicant.objects.filter(applicant_email = email).exists():
                 q = Applicant.objects.get(applicant_email = email)
-                realId = decrypt(q.id)
+                realId = ((((q.id * 59)+36)*120)-14)*298
                 if q.applicant_password == password:
                     return redirect('/home/'+str(realId))
                 else:
@@ -38,7 +38,7 @@ def signup(request):
             firstName = form.cleaned_data['applicant_name']
             lastName = form.cleaned_data['applicant_last_name']
             q = Applicant.objects.get(applicant_email = email)
-            realId = decrypt(q.id)
+            realId = ((((q.id * 59)+36)*120)-14)*298
         return redirect('/home/'+str(realId))
     else:
         form = SignUpForm()
@@ -62,7 +62,7 @@ def signup2(request):
                 t = Employee(employee_name = firstName, employee_last_name=lastName, employee_email=email, employee_company=r, is_employer=is_employer)
                 t.save()
                 q = Applicant.objects.get(applicant_email = email)
-                realId = decrypt(q.id)
+                realId = ((((q.id * 59)+36)*120)-14)*298
             return redirect('/home/'+str(realId))
         else:
             form1 = SignUpForm()
