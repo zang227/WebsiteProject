@@ -50,6 +50,7 @@ class Applicant(models.Model):
     applicant_address = models.CharField(max_length=100)
     applicant_resume = models.CharField(max_length=1000)
     application_status = models.CharField(max_length=100)
+    applicant_is_employee = models.CharField(default="False",max_length=100)
     applicant_job = models.ManyToManyField('Job')
     
     def __str__(self):
