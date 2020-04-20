@@ -205,6 +205,26 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-6">
+						<div class="card">
+							<div class = "row mt-3 ml-2">
+								<div class="col">
+									<h1><b>Accept an Applicant</b></h1>
+								</div>
+							</div>
+							<div class ="row m-3">
+								<div class="col">
+									<form method ="accept">
+										{% csrf_token %}
+										{{form4.as_p}}
+										<a id ="btn2" href="">
+											<input type ="submit" value="Accept" name="applyform"/>
+										</a>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				{% if applicant_results %}
 					{% if applicant_results_priority %}
@@ -219,6 +239,7 @@
 								<table class = "table table-bordered table-hover">
 									<thead>
 										<tr>
+											<th scope="col">ID</th>
 											<th scope ="col">First Name</th>
 											<th scope = "col">Last Name</th>
 											<th scope="col">Resume</th>
@@ -229,6 +250,7 @@
 									<tbody>
 									{% for applicant in applicant_results_priority %}
 										<tr>
+											<td>{{applicant.pk}}</td>
 											<td>{{applicant.applicant_name}}</td>
 											<td>{{applicant.applicant_last_name}}</td>
 											<td>{{applicant.applicant_resume}}</td>
@@ -237,6 +259,7 @@
 									{% endfor %}
 									{%for applicant in applicant_results %}
 									<tr>
+										<td>{{applicant.pk}}</td>
 										<td>{{applicant.applicant_name}}</td>
 										<td>{{applicant.applicant_last_name}}</td>
 										<td>{{applicant.applicant_resume}}</td>

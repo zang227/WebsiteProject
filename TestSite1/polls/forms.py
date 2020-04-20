@@ -51,6 +51,8 @@ class SearchJobForm(forms.Form):
 class ApplyForm(forms.Form):
     job_id = forms.IntegerField(label="Enter the Job ID for a job you have not already applied to:")
 
+class AcceptForm(forms.Form):
+    applicant_id = forms.IntegerField(label='Enter the applicant ID that you wish to hire:')
 
 class SearchApplicantForm(forms.Form):
     search = forms.CharField(label='Search Applicant by Last Name or Resume Qualities', max_length=100, required=True)

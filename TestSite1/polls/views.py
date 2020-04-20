@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company, Job, Message, Company
-from .forms import SignUpForm, SignUpForm2, PostJobForm, ResumeForm, editProfileForm, LoginForm, MessageForm, SearchJobForm, SearchApplicantForm, ApplyForm
+from .forms import SignUpForm, SignUpForm2, PostJobForm, AcceptForm, ResumeForm, editProfileForm, LoginForm, MessageForm, SearchJobForm, SearchApplicantForm, ApplyForm
 from django.contrib import messages
 from django.db.models import Q, Count
 from django.http import *
@@ -95,10 +95,11 @@ def search(request, applicant_id):
                     try:
                         form2 = SearchApplicantForm()
                         form3= ApplyForm()
+                        form4 = AcceptForm()
                         employee = Employee.objects.get(employee_email = applicant.applicant_email)
-                        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_list':applicant_list, 'form1':form1, 'form3':form3, 'form2':form2, 'employee':employee, 'job_list': job_list, 'job_results': job_results})
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'form4':form4, 'applicant_list':applicant_list, 'form1':form1, 'form3':form3, 'form2':form2, 'employee':employee, 'job_list': job_list, 'job_results': job_results})
                     except Employee.DoesNotExist:
-                        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_list':applicant_list, 'form1': form1, 'form3':form3, 'form2':form2, 'job_list': job_list, 'job_results': job_results})
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'form4':form4, 'applicant_list':applicant_list, 'form1': form1, 'form3':form3, 'form2':form2, 'job_list': job_list, 'job_results': job_results})
         elif 'searchapplicantform' in request.POST:
             search = request.POST['search']
             form2 = SearchApplicantForm(request.POST)
@@ -109,10 +110,23 @@ def search(request, applicant_id):
                     try:
                         form1=SearchJobForm()
                         form3=ApplyForm()
+                        form4=AcceptForm()
                         employee = Employee.objects.get(employee_email = applicant.applicant_email)
-                        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_results':applicant_results, 'applicant_results_priority':applicant_results_priority, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1':form1, 'employee':employee, 'job_list': job_list})
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'form4':form4, 'applicant_results':applicant_results, 'applicant_results_priority':applicant_results_priority, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1':form1, 'employee':employee, 'job_list': job_list})
                     except Employee.DoesNotExist:
-                        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_results':applicant_results, 'applicant_results_priority':applicant_results_priority, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1': form1, 'job_list': job_list})
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'form4':form4, 'applicant_results':applicant_results, 'applicant_results_priority':applicant_results_priority, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1': form1, 'job_list': job_list})
+        elif 'accept' in request.POST: 
+            form4 = AcceptForm(request.POST)
+            if form4.is_valid():
+                    applicant_id = form4.cleaned_data['applicant_id']
+                    t = Applicant.objects.get(pk = applicant_id)
+                    t.application_status = "Hired"
+                    t.save()
+            try:
+                employee = Employee.objects.get(employee_email = applicant.applicant_email)
+                return redirect('/search/'+str(applicant_id))
+            except Employee.DoesNotExist:
+                return redirect('/search/'+str(applicant_id))
         elif 'applyform' in request.POST:
             form3 = ApplyForm(request.POST)
             if form3.is_valid():
@@ -127,20 +141,34 @@ def search(request, applicant_id):
                 return redirect('/search/'+str(applicant_id))
             except Employee.DoesNotExist:
                 return redirect('/search/'+str(applicant_id))
+        else: 
+            form4 = AcceptForm(request.POST)
+            if form4.is_valid():
+                    applicant_id = form4.cleaned_data['applicant_id']
+                    t = Applicant.objects.get(pk = applicant_id)
+                    t.application_status = "Hired"
+                    t.save()
+            try:
+                employee = Employee.objects.get(employee_email = applicant.applicant_email)
+                return redirect('/search/'+str(applicant_id))
+            except Employee.DoesNotExist:
+                return redirect('/search/'+str(applicant_id))
 
     #checks to see if applicant is employer because it will not display if they are not
     try:
         form3 = ApplyForm()
         form1 = SearchJobForm()
         form2 = SearchApplicantForm()
+        form4 = AcceptForm()
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
         form1 = SearchJobForm()
-        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_list':applicant_list, 'form2':form2, 'form3': form3, 'form1':form1, 'employee':employee, 'job_list': job_list})
+        return render(request, 'polls/search.html', {'applicant': applicant, 'form4':form4, 'applicant_list':applicant_list, 'form2':form2, 'form3': form3, 'form1':form1, 'employee':employee, 'job_list': job_list})
     except Employee.DoesNotExist:
         form3 = ApplyForm()
         form1 = SearchJobForm()
         form2 = SearchApplicantForm()
-        return render(request, 'polls/search.html', {'applicant': applicant,'applicant_list':applicant_list, 'form2':form2, 'form3': form3, 'form1':form1, 'job_list': job_list})
+        form4 = AcceptForm()
+        return render(request, 'polls/search.html', {'applicant': applicant, 'form4':form4, 'applicant_list':applicant_list, 'form2':form2, 'form3': form3, 'form1':form1, 'job_list': job_list})
 
 def home(request, applicant_id):
     realId = decrypt(applicant_id)
