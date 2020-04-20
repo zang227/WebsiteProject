@@ -1,5 +1,7 @@
 from django import forms
-from .models import Applicant, Employee, Message
+from .models import Applicant, Employee, Message, Job, Company
+from datetime import datetime
+
 
 
 #create the form for signing up as an applicant
@@ -49,6 +51,7 @@ class SearchJobForm(forms.Form):
 class ApplyForm(forms.Form):
     job_id = forms.IntegerField(label="Enter the Job ID for a job you have not already applied to:")
 
+
 class SearchApplicantForm(forms.Form):
     search = forms.CharField(label='Search Applicant by Last Name or Resume Qualities', max_length=100, required=True)
 
@@ -58,4 +61,14 @@ class ResumeForm(forms.Form):
     class Meta: 
         model = Applicant 
         fields = ('applicant_resume',)
+
+class PostJobForm(forms.ModelForm):
+    job_title = forms.CharField(label='Enter the Job Title', required=True, max_length=100)
+    job_qualifications = forms.CharField(label='Enter the Qualifications for the Job', required=True, max_length=100)
+    job_date = forms.DateTimeField(label='Enter the Job\'s Posting Date', required=True, initial = datetime.now())
+    job_company = forms.ModelChoiceField(label='Enter the Job\'s Company', required=True, queryset = Company.objects.all() )
+
+    class Meta:
+        model = Job
+        fields = ('job_title', 'job_qualifications', 'job_date', 'job_company')
         

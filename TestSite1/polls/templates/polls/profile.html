@@ -33,12 +33,16 @@
                 <li class="nav-item">
                     <a id="nav4" class="nav-link" href="">Reports</a>
                 </li>
+                <li class = "nav-item">
+					<a id = "nav5" class = "nav-link" href="">Post Job</a>
+				</li>
             {% endif %}
         {% endif %}
+            
 </ul>
 <h1>Profile</h1>
 <li>
-    <a id="nav4" class="nav-link" href="/">Logout</a>
+    <a  href="/">Logout</a>
   </li>
 </div>
 </nav>
@@ -51,6 +55,8 @@
    document.getElementById("nav3").href = "/search/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
 
    document.getElementById("nav4").href = "/report/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+
+   document.getElementById("nav5").href = "/post/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
 
 
 </script>
