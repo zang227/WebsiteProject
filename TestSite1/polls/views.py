@@ -156,19 +156,6 @@ def report(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
 
-    #jobList = Job.objects.values_list('job_title', flat=True)
-    #for n in jobList:
-    #    jobID = Job.objects.get(job_title=n).id
-    #    u = Applicant.objects.get(pk=1)
-    #    u.applicant_job.set(, clear=True)
-
-    #print(Applicant.objects.values('applicant_job'))
-
-    #job = models.ManyToManyField(Job, related_name='job_title')
-    #applicant_job = job.job_title.all()
-
-
-
     id = Applicant.objects.get(id=realId)
     company_id = Company.objects.get(employee__employee_email=id)
     job_id = Job.objects.filter(job_company=company_id)

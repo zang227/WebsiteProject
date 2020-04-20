@@ -69,7 +69,7 @@
           <tr>
             <td>{{a.applicant_name}}</td>
             <td>{{a.applicant_last_name}}</td>
-            <td>{{a.applicant_job}}</td>
+            <td>{% for i in a.applicant_job.all %}{{ i.job_title }}{% endfor %}</td>
             <td>{{a.application_status}}</td>
           </tr>
           {% endfor %}
