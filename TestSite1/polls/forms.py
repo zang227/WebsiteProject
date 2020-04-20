@@ -47,5 +47,8 @@ class SearchJobForm(forms.Form):
     search = forms.CharField(required=True, max_length=100, label="Search Job or Qualifications")
 
 class ApplyForm(forms.Form):
-    job_title = forms.CharField()
+    job_id = forms.IntegerField(label="Enter the Job ID for a job you have not already applied to:")
+
+class SearchApplicantForm(forms.Form):
+    search = forms.CharField(label='Search Applicant by Last Name or Resume Qualities', max_length=100, required=True)
         
