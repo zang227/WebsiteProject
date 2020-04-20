@@ -18,11 +18,13 @@
       <li class="nav-item">
           <a id="nav3" class="nav-link" href="">Search</a>
       </li>
-      <li class="nav-item">
-          <a id="nav4" class="nav-link" href="">Reports</a>
-      </li>
-  </li>
-
+        {% if employee %}
+            {% if employee.is_employer == "True" %}
+                <li class="nav-item">
+                    <a id="nav4" class="nav-link" href="">Reports</a>
+                </li>
+            {% endif %}
+        {% endif %}
 </ul>
 <h1>Profile</h1>
 <li>
@@ -164,31 +166,6 @@
             </div>
             {% endif %}
 
-        </div>
-    </div>
-</div>
-<!--Applied Jobs Card and Documents Card Row-->
-<div class= "row mt-3 mb-3">
-    <!--Applied Jobs Card-->
-    <div class="col-12">
-        <div class="card">
-            <!--Title of Card Row-->
-            <div class="row mt-3">
-                <div class = "col">
-                    <h3 class="ml-2"><b>Applied Jobs</b></h3>
-                </div>
-            </div>
-            <hr class= "ml-2 mr-2"/>
-            <!--Their listed applications-->
-            <div class = "row mb-3 ml-1">
-                <div class = "col">
-                    {% if applicant.applicant_job %}
-                    <h5>{{ applicant.applicant_job }}</h5>
-                    {% else %}
-                    <h5>You have no applied to any jobs.</h5>
-                    {% endif %}
-                </div>
-            </div>
         </div>
     </div>
 </div>

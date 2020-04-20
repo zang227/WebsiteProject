@@ -51,4 +51,5 @@ class ApplyForm(forms.Form):
 
 class SearchApplicantForm(forms.Form):
     search = forms.CharField(label='Search Applicant by Last Name or Resume Qualities', max_length=100, required=True)
+
         
