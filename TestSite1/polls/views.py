@@ -160,7 +160,8 @@ def report(request, applicant_id):
 
     #print(Applicant.objects.values('applicant_job'))
 
-    #job_fix = models.ManyToManyField(Job, related_name='job_title')
+    #job = models.ManyToManyField(Job, related_name='job_title')
+    #applicant_job = job.job_title.all()
 
 
 
