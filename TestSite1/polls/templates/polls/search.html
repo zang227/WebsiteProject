@@ -37,7 +37,7 @@
   </ul>
   <h1></h1>
   <li>
-    <a id="nav4" class="nav-link" href="login.html">Logout</a>
+    <a id="nav4" class="nav-link" href="/">Logout</a>
   </li>
 </div>
 </nav>
@@ -107,6 +107,11 @@
 	<div class = "row mt-3">
 		<div class="col-12">
 			<div class = "card">
+				<div class="row">
+					<div class="col">
+						<h1><b>Results</b></h1>
+					</div>
+				</div>
 				<table class = "table table-bordered table-hover">
 					<thead>
 						<tr>
@@ -173,7 +178,7 @@
 	{% endif %}
 		{% if employee %}
 			{% if employee.is_employer == "True" %}
-				<div class="row mt-3">
+				<div class="row mt-3 mb-3">
 					<div class="col-6">
 						<div class="card">
 							<div class="row mt-3 ml-2">
@@ -181,7 +186,7 @@
 									<h1><b>Search Applicants</b></h1>
 								</div>
 							</div>
-							<div class="row">
+							<div class="row m-2">
 								<div class="col">
 									<form method="post">
 										{% csrf_token %}
@@ -195,56 +200,79 @@
 						</div>
 					</div>
 				</div>
-				<div class="row mt-3 mb-3">
-					<div class="col-12">
-						<div class="card">
-							<div class="row ml-2 mt-2">
-								<div class="col">
-									<h1>Browse Existing Applicants</h1>
+				{% if applicant_results %}
+					{% if applicant_results_priority %}
+					<div class = "row mt-3 mb-3">
+						<div class="col-12">
+							<div class = "card">
+								<div class="row">
+									<div class="col">
+										<h1><b>Results</b></h1>
+									</div>
 								</div>
-							</div>
-							<div class="row ml-2 mr-2">
-								<div class="col">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th scope="col">Job ID</th>
-												<th scope="col">Applicant Name</th>
-												<th scope="col">Date Applied</th>
-												<th scope="col">Application Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<th scope="row">1</th>
-												<td>John Smith</td>
-												<td>05/23/2019</td>
-												<td>Application under review</td>
-											</tr>
-											<tr>
-												<th scope ="row">2</th>
-												<td>Jane Smith</td>
-												<td>04/02/2019</td>
-												<td>Interviews</td>
-											</tr>
-											<tr>
-												<th scope="row">3</th>
-												<td>John Doe</td>
-												<td>01/20/2019</td>
-												<td>Application Submitted</td>
-											</tr>
-											<tr>
-												<th scope="row">4</th>
-												<td>Jane Doe</td>
-												<td>08/07/2019</td>
-												<td>No longer under review</td>
-											</tr>
-									</tbody>
-								</table>
-							</div>
+								<table class = "table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th scope ="col">First Name</th>
+											<th scope = "col">Last Name</th>
+											<th scope="col">Resume</th>
+										
+											<th scope="col">Is this Applicant a Priority?</th>
+										</tr>
+									</thead>
+									<tbody>
+									{% for applicant in applicant_results_priority %}
+										<tr>
+											<td>{{applicant.applicant_name}}</td>
+											<td>{{applicant.applicant_last_name}}</td>
+											<td>{{applicant.applicant_resume}}</td>
+											<td>Yes</td>
+										</tr>
+									{% endfor %}
+									{%for applicant in applicant_results %}
+									<tr>
+										<td>{{applicant.applicant_name}}</td>
+										<td>{{applicant.applicant_last_name}}</td>
+										<td>{{applicant.applicant_resume}}</td>
+										<td>No</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
+				{% else %}
+				<div class = "row mt-3">
+					<div class="col-12">
+						<div class = "card">
+							<table class = "table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th scope ="col">First Name</th>
+										<th scope = "col">Last Name</th>
+										<th scope="col">Resume</th>
+										<th scope ="col">Job ID Applied</th>
+										<th scope="col">Is this Applicant a Priority?</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% for applicant in applicant_results_priority %}
+									<tr>
+										<td>{{applicant.applicant_name}}</td>
+										<td>{{applicant.applicant_last_name}}</td>
+										<td>{{applicant.applicant_resume}}</td>
+										<td>{{applicant.applicant_job}}</td>
+										<td>No</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			{% endif %}
 			{% endif %}
 		{% endif %}
 </div>

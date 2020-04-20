@@ -102,15 +102,16 @@ def search(request, applicant_id):
             search = request.POST['search']
             form2 = SearchApplicantForm(request.POST)
             if form2.is_valid():
-                applicant_results_priority = Applicant.objects.filter(Q(applicant_last_name = search) | Q(applicant_resume__icontains = search))
+                applicant_results_priority = Applicant.objects.filter((Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search)) & Q(applicant_is_employee__icontains = 'True'))
+                applicant_results = Applicant.objects.filter(Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search))
                 if applicant_results:
                     try:
                         form1=SearchJobForm()
                         form3=ApplyForm()
                         employee = Employee.objects.get(employee_email = applicant.applicant_email)
-                        return render(request, 'polls/search.html', {'applicant': applicant, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1':form1, 'employee':employee, 'job_list': job_list, 'job_results': job_results})
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_results':applicant_results, 'applicant_results_priority':applicant_results_priority, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1':form1, 'employee':employee, 'job_list': job_list})
                     except Employee.DoesNotExist:
-                        return render(request, 'polls/search.html', {'applicant': applicant, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1': form1, 'job_list': job_list, 'job_results': job_results})
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_results':applicant_results, 'applicant_results_priority':applicant_results_priority, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1': form1, 'job_list': job_list})
         elif 'applyform' in request.POST:
             form3 = ApplyForm(request.POST)
             if form3.is_valid():
