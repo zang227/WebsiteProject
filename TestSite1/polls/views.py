@@ -152,19 +152,40 @@ def report(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
     id = Applicant.objects.get(id=realId)
-    #applied = Applicant.objects.exclude(applicant_job=None)
+    applied = Applicant.objects.filter(applicant_job__isnull=False)
     company_id = Company.objects.get(employee__employee_email=id)
-    #company_all = Company.objects.filter(employee__employee_email__in=applied)
+    company_all = Company.objects.filter(employee__employee_email__in=list(applied))
     job_id = Job.objects.filter(job_company=company_id)
+    j = Job.objects.all()
+    a = Applicant.objects.all()
+    c = Company.objects.all()
+    e = Employee.objects.all()
 
-    for a in Applicant.objects.filter(applicant_job__in=job_id).values('applicant_name', 'applicant_last_name',
-                                                                       'applicant_job', 'application_status'):
+    job_data = {
+        "job_id": j
+    }
+
+    company_data = {
+        "company_id": c
+    }
+
+    employee_data = {
+        "employee_id": e
+    }
+
+    applicant_data = {
+        "applicant_id": a
+    }
+
+    for a in Applicant.objects.filter(applicant_job__in=job_id).values_list('applicant_name', 'applicant_last_name',
+                                                                            'applicant_job', 'application_status'):
         print(a)
 
-    #for c in Company.objects.values(company_all).annotate(Count=Count('applied')):
-        #print(c[0:4])
+    for c in Company.objects.filter(company_name__in=company_all).values_list('company_name',
+                                                                              count=Count('company_name')):
+        print(c)
 
-    return render(request, 'polls/report.html', {'applicant': applicant})
+    return render(request, 'polls/report.html', {'applicant': applicant}, job_data, company_data, employee_data, applicant_data)
 
 def profile(request, applicant_id):
     realId = decrypt(applicant_id)
