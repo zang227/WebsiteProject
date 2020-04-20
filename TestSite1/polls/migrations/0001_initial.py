@@ -64,7 +64,8 @@ class Migration(migrations.Migration):
                 ('applicant_address', models.CharField(max_length=100)),
                 ('applicant_resume', models.CharField(max_length=1000)),
                 ('application_status', models.CharField(max_length=100)),
-                ('applicant_job', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='polls.Job')),
+                ('applicant_job', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='polls.Job'))
+                ('applcaint_title', models.CharField(default='', max_length=1000)),
             ],
         ),
     ]

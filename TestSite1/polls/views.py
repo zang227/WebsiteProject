@@ -159,9 +159,6 @@ def report(request, applicant_id):
     print(applicant_loop)
     print(Job.objects.get(id=1))
 
-    for n in range(1,11):
-        j = Job.objects.get(id=n).applicant_set.all()
-        print(Applicant.objects.values('applicant_job'))
 
 
     applied = Applicant.objects.filter(applicant_job__isnull=False)
