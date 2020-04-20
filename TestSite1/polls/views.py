@@ -152,25 +152,36 @@ def report(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
 
+    #jobList = Job.objects.values_list('job_title', flat=True)
+    #for n in jobList:
+    #    jobID = Job.objects.get(job_title=n).id
+    #    u = Applicant.objects.get(pk=1)
+    #    u.applicant_job.set(, clear=True)
+
+    #print(Applicant.objects.values('applicant_job'))
+
+    job_fix = models.ManyToManyField(Job, related_name='job_title')
+
+
+
     id = Applicant.objects.get(id=realId)
     company_id = Company.objects.get(employee__employee_email=id)
     job_id = Job.objects.filter(job_company=company_id)
     applicant_loop = Applicant.objects.filter(applicant_job__in=job_id)
-    print(applicant_loop)
-    print(Job.objects.get(id=1))
-
-
 
     applied = Applicant.objects.filter(applicant_job__isnull=False)
-    #job_all = Job.objects.filter(employee__employee_email__in=applied)
+    company_all = Company.objects.filter(employee__employee_email__in=list(applied)).values('company_name').annotate(
+        ccount=Count('company_name'))
+
+    job_most = applied.values('applicant_job').annotate(jcount=Count('applicant_job')).order_by('-jcount')[0]
+    top = Applicant.objects.filter(application_status__exact='Hired').count()
+    bottom = Applicant.objects.filter(applicant_job__isnull=False).count()
+    percent = top/bottom * 100
 
 
-    #for c in Company.objects.filter(company_name__in=job_all).values_list('company_name',
-    #                                                                       count=Count('company_name')):
-    #    print(c)
-
-    return render(request, 'polls/report.html', {'applicant': applicant, 'applied': applied,
-                                                 'applicant_loop': applicant_loop})
+    return render(request, 'polls/report.html', {'applicant': applicant, 'applied': applied, 'job_most': job_most,
+                                                 'applicant_loop': applicant_loop, 'company_all': company_all,
+                                                 'percent': percent})
 
 def profile(request, applicant_id):
     realId = decrypt(applicant_id)

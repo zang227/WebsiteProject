@@ -51,6 +51,7 @@
   <h2><strong>Current Employee Application List</strong></h2>
 
   <table style="width:70%" align="center"class = "table table-hover" class="w3-table w3-striped w3-bordered">
+    <caption>Percentage of Applicants Hired: {{percent}}%</caption>
     <thead>
       <tr class="w3-theme">
         <th scope = 'col'>First Name</th>
@@ -80,38 +81,28 @@
   <h2><strong>Companies with Greatest Number of Applicants</strong></h2>
   <table style="width:70%" align="center"class = "table table-hover" class="w3-table w3-striped w3-bordered">
 
-    <caption>Job Field with the Greatest Number of Applicants: Software Developer</caption>
-
+    <caption>Job Field with the Greatest Number of Applicants: {{job_most.applicant_job}}</caption>
+   <thead>
     <tr class="w3-theme">
-      <td>Company ID</td>
       <td>Company Name</td>
-      <td >Number of Applicants</td>
+      <td>Number of Applicants</td>
     </tr>
-    <tr>
-      <td>34123</td>
-      <td>IBM</td>
-      <td>253</td>
-    </tr>
-    <tr>
-      <td>15739</td>
-      <td>Microsft</td>
-      <td>177</td>
-    </tr>
-    <tr>
-      <td>19482</td>
-      <td>Google</td>
-      <td>124</td>
-    </tr>
-    <tr>
-      <td>03756</td>
-      <td>Amazon</td>
-      <td>93</td>
-    </tr>
-    <tr>
-      <td>29401</td>
-      <td>Apple</td>
-      <td>56</td>
-    </tr>
+   </thead>
+    <tbody>
+      {% if company_all %}
+      <ul>
+        {% for c in company_all %}
+          <tr>
+            <td>{{c.company_name}}</td>
+            <td>{{c.ccount}}</td>
+          </tr>
+          {% endfor %}
+        </ul>
+        {% else %}
+            <p>No applicants</p>
+        {% endif %}
+      </ul>
+    </tbody>
 
   </table>
 
