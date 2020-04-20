@@ -49,10 +49,19 @@
       <a id ="btn3" href="">
         <p><input  type="button" value="Report" class = "w3-button w3-blue w3-round-xxlarge"></p>
       </a>
-    </div>
-    {% endif %}
-    {% endif %}
+    </div> 
   </div>
+  <div class="w3-third">
+    <div class="w3-card w3-container" style ="min-height:350px">
+      <h3>Post a Job</h3><br>
+      <a id ="btn4" href="">
+        <i class="fa fa-file-o w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+        <p><input type ="button" value="Post a Job" class = "w3-button w3-blue w3-round-xxlarge"></p>
+      </a>
+    </div>
+  </div>
+  {% endif %}
+    {% endif %}
 </div>
 
 
@@ -60,6 +69,7 @@
  document.getElementById("btn1").href = "/profile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
  document.getElementById("btn2").href = "/search/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
  document.getElementById("btn3").href = "/report/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+ document.getElementById("btn4").href = "/report/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
 </script>
 
 <style></style>

@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Applicant, Employee, Company, Job, Message
-from .forms import SignUpForm, SignUpForm2, ResumeForm, editProfileForm, LoginForm, MessageForm, SearchJobForm, SearchApplicantForm, ApplyForm
+from .models import Applicant, Employee, Company, Job, Message, Company
+from .forms import SignUpForm, SignUpForm2, PostJobForm, ResumeForm, editProfileForm, LoginForm, MessageForm, SearchJobForm, SearchApplicantForm, ApplyForm
 from django.contrib import messages
 from django.db.models import Q, Count
 from django.http import *
+from datetime import datetime
 
 
 
@@ -116,6 +117,9 @@ def search(request, applicant_id):
             form3 = ApplyForm(request.POST)
             if form3.is_valid():
                 job_id = form3.cleaned_data['job_id']
+                t = Applicant.objects.get(pk = realId)
+                t.application_status = "Applied"
+                t.save()
                 q = Job.objects.get(pk = job_id)
                 applicant.applicant_job.add(q)
             try:
@@ -253,6 +257,20 @@ def editProfile(request, applicant_id):
     else:
         form = editProfileForm(instance=update)
         return render(request, 'polls/editProfile.html', {'applicant': applicant, 'form':form})
+
+def post(request, applicant_id):
+    realId = decrypt(applicant_id)
+    applicant = get_object_or_404(Applicant, pk=realId)
+    choices = Company.objects.values_list=('company_name')
+    if request.method == 'POST':
+        form = PostJobForm(request.POST)
+        if form.is_valid():
+            form.save()
+            q = Applicant.objects.get(pk = realId)
+        return redirect('/search/'+str(applicant_id))
+    else:
+        form = PostJobForm()
+        return render (request, 'polls/post.html', {'applicant':applicant, 'form':form })
 
 
 #encryption (id * 59) + 36 ) * 120 ) - 14 ) * 298)
