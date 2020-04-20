@@ -5,7 +5,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 </html>
-
+<style> 
+	h1, h3 {
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+		color: #4292e3;
+	}
+	button {
+		color: #4292e3;
+	}
+</style>
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
@@ -170,7 +180,7 @@
     </div>
 </div>
 <!--Documents Card-->
-<div class ="row">
+<div class ="row mt-4">
     <div class="col-12 mt-3 mt-md-0 mb-3">
         <div class="card">
             <!--Title of Card Row-->
@@ -180,7 +190,6 @@
                 </div>
             </div>
             <hr class= "ml-2 mr-2"/>
-            <div class="row mt-1 mb-2">
                 {% if applicant.applicant_resume != "" %}
                 <div class="row mt-1 mb-2 ml-2"> 
                     <div class="col">
@@ -188,34 +197,19 @@
                     </div>
                 </div>
                 <hr class= "ml-2 mr-2"/>
-                <div class="row mt-1 mb-2">
+                {% endif %}
+                <div class="row m-2">
                     <div class="col">
-                        <h5 class="ml-2">Upload new resume in PDF format.</h5>
-                    </div>
-                </div>
-                <div class = "row mt-1 mb-2 ml-2">
-                    <div class="col">
-                        <input type ="file" accept=".pdf"/>
-                        <input type ="submit" value="Update"/>
-                    </div>
-                </div>
-                {% else %}
-                <div class="row mb-2 ml-3">
-                    <div class="col">
-                        <h5 class="ml-2">Upload your resume in PDF format.</h5>
-                    </div>
-                </div>
-                <!--Upload a document Row-->
-                <div class="row mt-1 mb-2 ml-2">
-                    <div class="col">
-                        <form>
-                            <input type ="file" accept=".pdf"/>
-                            <input type ="submit"/>
+                        <form name="resume" method="post">
+                            {% csrf_token %}
+                            {{form2.as_p}}
+                            <a id="btn2" href="">
+                                <input type="submit" value="Send" />
+                            </a> 
                         </form>
                     </div>
                 </div>
-                {% endif %}
-            </div>
+                <hr class= "ml-2 mr-2"/>
         </div>
     </div>
 </div>
@@ -257,7 +251,7 @@
             </div>
             <div class="row m-2">
                 <div class="col">
-                    <form action="" method="post">
+                    <form name="message" method="post">
                         {% csrf_token %}
                         {{form.as_p}}
                         <a id="btn2" href="">
