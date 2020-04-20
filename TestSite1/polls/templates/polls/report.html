@@ -53,49 +53,27 @@
   <table style="width:70%" align="center"class = "table table-hover" class="w3-table w3-striped w3-bordered">
     <thead>
       <tr class="w3-theme">
-        <th>Applicant ID</th>
-        <th>Name</th>
-        <th>Last Name</th>
-        <th>Applicant Resume</th>
-        <th>Status of Application</th>
+        <th scope = 'col'>First Name</th>
+        <th scope = 'col'>Last Name</th>
+        <th scope = 'col'>Job Title</th>
+        <th scope = 'col'>Application Status</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>Timothy</td>
-        <td>Steudlein</td>
-        <td>Applicant Resume 1</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Chase</td>
-        <td>Comardelle</td>
-        <td>Applicant Resume 2</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Abbie</td>
-        <td>Crabtree</td>
-        <td>Applicant Resume 3</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>Roger</td>
-        <td>Zeringue</td>
-        <td>Applicant Resume 4</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>Seth</td>
-        <td>Pottle</td>
-        <td>Applicant Resume 5</td>
-        <td>2</td>
-      </tr>
+        {% if applicant_loop %}
+        <ul>
+          {% for a in applicant_loop %}
+          <tr>
+            <td>{{a.applicant_name}}</td>
+            <td>{{a.applicant_last_name}}</td>
+            <td>{{a.applicant_job}}</td>
+            <td>{{a.application_status}}</td>
+          </tr>
+          {% endfor %}
+        </ul>
+        {% else %}
+            <p>No applicants.</p>
+        {% endif %}
     </tbody>
   </table>
   <p></p>
