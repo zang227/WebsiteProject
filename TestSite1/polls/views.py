@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company, Job, Message
 from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, SearchJobForm, SearchApplicantForm, ApplyForm
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import *
 
 
@@ -150,6 +150,19 @@ def home(request, applicant_id):
 def report(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
+    id = Applicant.objects.get(id=realId)
+    #applied = Applicant.objects.exclude(applicant_job=None)
+    company_id = Company.objects.get(employee__employee_email=id)
+    #company_all = Company.objects.filter(employee__employee_email__in=applied)
+    job_id = Job.objects.filter(job_company=company_id)
+
+    for a in Applicant.objects.filter(applicant_job__in=job_id).values('applicant_name', 'applicant_last_name',
+                                                                       'applicant_job', 'application_status'):
+        print(a)
+
+    #for c in Company.objects.values(company_all).annotate(Count=Count('applied')):
+        #print(c[0:4])
+
     return render(request, 'polls/report.html', {'applicant': applicant})
 
 def profile(request, applicant_id):
