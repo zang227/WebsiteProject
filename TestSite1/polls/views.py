@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company, Job, Message
-from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, SearchJobForm, SearchApplicantForm, ApplyForm
+from .forms import SignUpForm, SignUpForm2, ResumeForm, editProfileForm, LoginForm, MessageForm, SearchJobForm, SearchApplicantForm, ApplyForm
 from django.contrib import messages
 from django.db.models import Q, Count
 from django.http import *
@@ -178,16 +178,30 @@ def report(request, applicant_id):
 def profile(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
-    #handles what happens once a message is sent
+    update = Applicant.objects.get(id = realId)
     if request.method == 'POST':
-        form = MessageForm(request.POST)
-        if form.is_valid():
-            receiver_email = form.cleaned_data['receiver_email']
-            message = form.cleaned_data['message']
-            sender_email = applicant.applicant_email
-            t = Message(sender_email=sender_email, receiver_email=receiver_email, message=message)
-            t.save()
-        return redirect('/profile/'+str(applicant_id))
+        #handles what happens once a message is sent
+        if 'message' in request.POST:
+            form = MessageForm(request.POST)
+            if form.is_valid():
+                receiver_email = form.cleaned_data['receiver_email']
+                message = form.cleaned_data['message']
+                sender_email = applicant.applicant_email
+                t = Message(sender_email=sender_email, receiver_email=receiver_email, message=message)
+                t.save()
+            return redirect('/profile/'+str(applicant_id))
+        #handles what happens once resume is submitted 
+        else:
+            print("testttttttt")
+            form2 = ResumeForm(request.POST)
+            if form2.is_valid():
+                resume = form2.cleaned_data['applicant_resume']
+                q = Applicant.objects.get(id = realId)
+                q.applicant_resume = resume
+                q.save()
+            else:
+                print("hi")
+            return redirect('/profile/'+str(applicant_id))
     #checks if they are an employee or employer or if they have messages because if they are not some things will not be displayed
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
@@ -195,18 +209,22 @@ def profile(request, applicant_id):
         try:
             messages = Message.objects.filter(receiver_email = applicant.applicant_email)
             form = MessageForm()
-            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee, 'messages': messages, 'form':form})
+            form2 = ResumeForm()
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'form2':form2, 'employee':employee, 'messages': messages, 'form':form})
         except Message.DoesNotExist:
             form = MessageForm()
-            return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee, 'form':form})
+            form2 = ResumeForm()
+            return render(request, 'polls/profile.html', {'applicant': applicant,'form2':form2, 'employee':employee, 'form':form})
     except Employee.DoesNotExist:
         try:
             form = MessageForm()
+            form2 = ResumeForm()
             messages = Message.objects.filter(receiver_email = applicant.applicant_email)
-            return render(request, 'polls/profile.html', {'applicant': applicant, 'messages': messages, 'form':form})
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'form2':form2, 'messages': messages, 'form':form})
         except Message.DoesNotExist:
             form = MessageForm()
-            return render(request, 'polls/profile.html', {'applicant': applicant, 'form':form})
+            form2 = ResumeForm()
+            return render(request, 'polls/profile.html', {'applicant': applicant, 'form2':form2, 'form':form})
 
 def editProfile(request, applicant_id):
     realId = decrypt(applicant_id)

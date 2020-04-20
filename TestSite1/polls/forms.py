@@ -51,4 +51,11 @@ class ApplyForm(forms.Form):
 
 class SearchApplicantForm(forms.Form):
     search = forms.CharField(label='Search Applicant by Last Name or Resume Qualities', max_length=100, required=True)
+
+class ResumeForm(forms.Form):
+    applicant_resume = forms.CharField(label='Update or Enter Your Resume', required=True, max_length=1000)
+
+    class Meta: 
+        model = Applicant 
+        fields = ('applicant_resume',)
         
