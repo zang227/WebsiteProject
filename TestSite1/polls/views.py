@@ -194,7 +194,7 @@ def report(request, applicant_id):
     company_all = Company.objects.filter(employee__employee_email__in=list(applied)).values('company_name').annotate(
         ccount=Count('company_name')).order_by('-ccount')[:4]
 
-    app_Count = Job.objects.filter(pk__in=appliedJobs).values('job_title').annotate(appCount=Count('job_title')).order_by('-appCount')
+    app_Count = Job.objects.filter(id__in=appliedJobs).values('job_title').annotate(appCount=Count('job_title')).order_by('-appCount')
     print(app_Count)
     job_most = applied.values('applicant_job').annotate(jcount=Count('applicant_job')).order_by('-jcount')[0]
     top = Applicant.objects.filter(application_status__exact='Hired').count()
