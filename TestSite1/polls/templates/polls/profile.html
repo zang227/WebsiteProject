@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    </head>
+<head>
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
 </html>
 
- <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item ">
           <a id ="nav1"  class="nav-link" href="">Home </a>
-        </li>
-        <li class="nav-item">
-          <a id ="nav2" class="nav-link" href="">Profile</a>
-        </li>
-        <li class="nav-item">
-          <a id="nav3" class="nav-link" href="">Search</a>
-        </li>
-        <li class="nav-item">
-          <a id="nav4" class="nav-link" href="">Reports</a>
-        </li>
       </li>
-    </ul>
-    <h1>Profile</h1>
-  </div>
+      <li class="nav-item">
+          <a id ="nav2" class="nav-link" href="">Profile</a>
+      </li>
+      <li class="nav-item">
+          <a id="nav3" class="nav-link" href="">Search</a>
+      </li>
+      <li class="nav-item">
+          <a id="nav4" class="nav-link" href="">Reports</a>
+      </li>
+  </li>
+
+</ul>
+<h1>Profile</h1>
+<li>
+    <a id="nav4" class="nav-link" href="login.html">Logout</a>
+  </li>
+</div>
 </nav>
 
 <script>
- document.getElementById("nav1").href = "/home/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
- 
- document.getElementById("nav2").href = "/profile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
- 
- document.getElementById("nav3").href = "/search/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
- 
- document.getElementById("nav4").href = "/report/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
- 
+   document.getElementById("nav1").href = "/home/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+
+   document.getElementById("nav2").href = "/profile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+
+   document.getElementById("nav3").href = "/search/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+
+   document.getElementById("nav4").href = "/report/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+
 
 </script>
 
@@ -104,215 +108,205 @@
                 <!--If they are an employee-->
                 {% if employee %}
                 <!--Company Row-->
-                    <div class="row">
-                        <div class="col-6">
-                            <h5 class="ml-2"><b>Company Name:</b></h5>
-                        </div>
-                        <div class="col-6">
-                            <h5>{{employee.employee_company}}</h5>
-                        </div>
+                <div class="row">
+                    <div class="col-6">
+                        <h5 class="ml-2"><b>Company Name:</b></h5>
                     </div>
-                    <hr class= "ml-2 mr-2"/>
+                    <div class="col-6">
+                        <h5>{{employee.employee_company}}</h5>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
                 <!--Type-->
-                    <div class="row">
-                        <div class="col-6">
-                            <h5 class="ml-2"><b>User Type:</b></h5>
-                        </div>
-                        {% if employee.is_employer == "True" %}
-                            <div class="col-6">
-                                <h5>Employer</h5>
-                            </div>
-                        {% else %}
-                            <div class="col-6">
-                                <h5 >Employee</h5>
-                            </div>
-                        {% endif %}
+                <div class="row">
+                    <div class="col-6">
+                        <h5 class="ml-2"><b>User Type:</b></h5>
                     </div>
-                    <hr class= "ml-2 mr-2"/>
+                    {% if employee.is_employer == "True" %}
+                    <div class="col-6">
+                        <h5>Employer</h5>
+                    </div>
+                    {% else %}
+                    <div class="col-6">
+                        <h5 >Employee</h5>
+                    </div>
+                    {% endif %}
+                </div>
+                <hr class= "ml-2 mr-2"/>
                 <!--Edit Profile Information Button Row-->
                 <div class = "row mb-2">
                     <div class="col-md-11 col-9"></div>
                     <div class= "col-md-1 pl-md-1 col-1 ml-3 ml-md-0">
                         <a id="btn1" href="">
-								<input class = "btn btn-info" style = "width: 4rem" type ="submit"value="Edit" />
-						</a> 
+                            <input class = "btn btn-info" style = "width: 4rem" type ="submit"value="Edit" />
+                        </a> 
                     </div>
                 </div>
                 <!--If it they are an applicant-->
                 {% else %}
-                    <div class="row">
-                        <div class="col-6">
-                            <h5 class="ml-2"><b>User Type:</b></h5>
-                        </div>
-                        <div class="col-6">
-                            <h5>Applicant</h5>
-                        </div>
+                <div class="row">
+                    <div class="col-6">
+                        <h5 class="ml-2"><b>User Type:</b></h5>
                     </div>
-                    <hr class= "ml-2 mr-2"/>
+                    <div class="col-6">
+                        <h5>Applicant</h5>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
                 <!--Edit Profile Information Button Row-->
                 <div class = "row mb-2">
                     <div class="col-md-11 col-9"></div>
                     <div class= "col-md-1 pl-md-1 col-1 ml-3 ml-md-0">
-						<a id="btn1" href="">
-								<input class = "btn btn-info" style = "width: 4rem" type ="submit"value="Edit" />
-						</a> 
-                    </div>
-                </div>
-                {% endif %}
-                
-            </div>
-        </div>
-    </div>
-    <!--Applied Jobs Card and Documents Card Row-->
-    <div class= "row mt-3 mb-3">
-        <!--Applied Jobs Card-->
-        <div class="col-12">
-            <div class="card">
-                <!--Title of Card Row-->
-                <div class="row mt-3">
-                    <div class = "col">
-                        <h3 class="ml-2"><b>Applied Jobs</b></h3>
-                    </div>
-                </div>
-                <hr class= "ml-2 mr-2"/>
-                <!--Their listed applications-->
-                <div class = "row mb-3 ml-1">
-                    <div class = "col">
-                        {% if applicant.applicant_job %}
-							<h5>{{ applicant.applicant_job }}</h5>
-                        {% else %}
-                            <h5>You have no applied to any jobs.</h5>
-						{% endif %}
-                    </div>
+                      <a id="btn1" href="">
+                        <input class = "btn btn-info" style = "width: 4rem" type ="submit"value="Edit" />
+                    </a> 
                 </div>
             </div>
+            {% endif %}
+
         </div>
     </div>
-        <!--Documents Card-->
-        <div class ="row">
-        <div class="col-12 mt-3 mt-md-0 mb-3">
-            <div class="card">
-                <!--Title of Card Row-->
-                <div class="row mt-3">
-                    <div class ="col">
-                        <h3 class="ml-2"><b>Resume</b></h3>
-                    </div>
+</div>
+<!--Applied Jobs Card and Documents Card Row-->
+<div class= "row mt-3 mb-3">
+    <!--Applied Jobs Card-->
+    <div class="col-12">
+        <div class="card">
+            <!--Title of Card Row-->
+            <div class="row mt-3">
+                <div class = "col">
+                    <h3 class="ml-2"><b>Applied Jobs</b></h3>
                 </div>
-                <hr class= "ml-2 mr-2"/>
-                <div class="row mt-1 mb-2">
-                    {% if applicant.applicant_resume != "" %}
-                        <div class="row mt-1 mb-2 ml-2"> 
-                            <div class="col">
-                                <h5>{{applicant.applicant_resume}}</h5>
-                            </div>
-                        </div>
-                        <hr class= "ml-2 mr-2"/>
-                        <div class="row mt-1 mb-2">
-                            <div class="col">
-                                <h5 class="ml-2">Upload new resume in PDF format.</h5>
-                            </div>
-                        </div>
-                        <div class = "row mt-1 mb-2 ml-2">
-                            <div class="col">
-                                <input type ="file" accept=".pdf"/>
-                                <input type ="submit" value="Update"/>
-                            </div>
-                        </div>
+            </div>
+            <hr class= "ml-2 mr-2"/>
+            <!--Their listed applications-->
+            <div class = "row mb-3 ml-1">
+                <div class = "col">
+                    {% if applicant.applicant_job %}
+                    <h5>{{ applicant.applicant_job }}</h5>
                     {% else %}
-                        <div class="row mb-2 ml-3">
-                            <div class="col">
-                                <h5 class="ml-2">Upload your resume in PDF format.</h5>
-                            </div>
-                            </div>
-                        <!--Upload a document Row-->
-                        <div class="row mt-1 mb-2 ml-2">
-                            <div class="col">
-                                <form>
-                                    <input type ="file" accept=".pdf"/>
-                                    <input type ="submit"/>
-                                </form>
-                            </div>
-                        </div>
+                    <h5>You have no applied to any jobs.</h5>
                     {% endif %}
-            </div>
-        </div>
-    </div>
-    </div>
-    <!--Message Board-->
-    <div class="row mt-3 mb-3">
-        <div class = "col-6">
-            <div class="card">
-                <!--Title Row-->
-                <div class="row mt-2">
-                    <div class="col">
-                        <h3 class="ml-2"><b>Your Messages</b></h3>
-                    </div>
-                </div>
-                <hr class= "ml-2 mr-2"/>
-                <!--Messages Row-->
-                {% for message in messages %}
-                    <div class = "row">
-                        <div class="col">
-                            <h6 class="ml-2"><b>From: {{message.sender_email}}</b></h6>
-                        </div>
-                    </div>
-                    <div class = "row">
-                        <div class = "col">
-                            <p class="ml-2">{{message.message}}</p>
-                            <hr class= "ml-2 mr-2"/>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-        <!--Send Messages-->
-        <div class ="col-6">
-            <div class="card">
-                <!--Title Row-->
-                <div class="row m-2">
-                    <div class="col">
-                        <h3 class="ml-2"><b>Send a Message</b></h3>
-                    </div>
-                </div>
-                <div class="row m-2">
-                    <div class="col">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            {{form.as_p}}
-                            <a id="btn2" href="">
-								<input type="submit" value="Send" />
-							</a> 
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--Documents Card-->
+<div class ="row">
+    <div class="col-12 mt-3 mt-md-0 mb-3">
+        <div class="card">
+            <!--Title of Card Row-->
+            <div class="row mt-3">
+                <div class ="col">
+                    <h3 class="ml-2"><b>Resume</b></h3>
+                </div>
+            </div>
+            <hr class= "ml-2 mr-2"/>
+            <div class="row mt-1 mb-2">
+                {% if applicant.applicant_resume != "" %}
+                <div class="row mt-1 mb-2 ml-2"> 
+                    <div class="col">
+                        <h5>{{applicant.applicant_resume}}</h5>
+                    </div>
+                </div>
+                <hr class= "ml-2 mr-2"/>
+                <div class="row mt-1 mb-2">
+                    <div class="col">
+                        <h5 class="ml-2">Upload new resume in PDF format.</h5>
+                    </div>
+                </div>
+                <div class = "row mt-1 mb-2 ml-2">
+                    <div class="col">
+                        <input type ="file" accept=".pdf"/>
+                        <input type ="submit" value="Update"/>
+                    </div>
+                </div>
+                {% else %}
+                <div class="row mb-2 ml-3">
+                    <div class="col">
+                        <h5 class="ml-2">Upload your resume in PDF format.</h5>
+                    </div>
+                </div>
+                <!--Upload a document Row-->
+                <div class="row mt-1 mb-2 ml-2">
+                    <div class="col">
+                        <form>
+                            <input type ="file" accept=".pdf"/>
+                            <input type ="submit"/>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!--Message Board-->
+<div class="row mt-3 mb-3">
+    <div class = "col-6">
+        <div class="card">
+            <!--Title Row-->
+            <div class="row mt-2">
+                <div class="col">
+                    <h3 class="ml-2"><b>Your Messages</b></h3>
+                </div>
+            </div>
+            <hr class= "ml-2 mr-2"/>
+            <!--Messages Row-->
+            {% for message in messages %}
+            <div class = "row">
+                <div class="col">
+                    <h6 class="ml-2"><b>From: {{message.sender_email}}</b></h6>
+                </div>
+            </div>
+            <div class = "row">
+                <div class = "col">
+                    <p class="ml-2">{{message.message}}</p>
+                    <hr class= "ml-2 mr-2"/>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!--Send Messages-->
+    <div class ="col-6">
+        <div class="card">
+            <!--Title Row-->
+            <div class="row m-2">
+                <div class="col">
+                    <h3 class="ml-2"><b>Send a Message</b></h3>
+                </div>
+            </div>
+            <div class="row m-2">
+                <div class="col">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <a id="btn2" href="">
+                            <input type="submit" value="Send" />
+                        </a> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
 
 <script>
-document.getElementById("btn1").href = "/editProfile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
- 
-document.getElementById("btn2").href = "/profile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+    document.getElementById("btn1").href = "/editProfile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
 
- 
+    document.getElementById("btn2").href = "/profile/" + (((((({{applicant.id}}) * 59) + 36 ) * 120 ) - 14) * 298).toString();
+
+
 </script>
 
 <style>
-    /* input format for login*/
-    input[type=text], 
-    input[type=password],
-    input[type=email] { 
-      width: 100%; 
-      padding: 12px 20px; 
-      margin: 8px 0; 
-      display: inline-block; 
-      border: 1px solid #ccc; 
-      box-sizing: border-box; 
-    } 
-    /*btn style*/ 
-    button { 
+
+  /*btn style*/ 
+  button { 
       background-color: #4292e3; 
       color: white; 
       padding: 12px 20px; 
@@ -320,12 +314,13 @@ document.getElementById("btn2").href = "/profile/" + (((((({{applicant.id}}) * 5
       border: none; 
       cursor: pointer; 
       width: 100%; 
-    } 
-    h1 { text-align: center;
+  } 
+  h1 { text-align: center;
     width: 20em
     margin-left: auto;
     margin-right: auto; 
     padding-left: 400px;
     color: white;
-     }
-    </style>
+}
+a{color: black;}
+</style>
