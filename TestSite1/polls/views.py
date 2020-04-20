@@ -1,7 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Applicant, Employee, Company, Job, Message
-from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, SearchJobForm
-from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, ApplyForm
+from .forms import SignUpForm, SignUpForm2, editProfileForm, LoginForm, MessageForm, SearchJobForm, SearchApplicantForm, ApplyForm
 from django.contrib import messages
 from django.db.models import Q
 from django.http import *
@@ -10,7 +9,7 @@ from django.http import *
 
 
 def login(request):
-    #handles once the login form is submitted 
+    #handles once the login form is submitted
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -49,7 +48,7 @@ def signup(request):
         return render(request, 'polls/signup.html', {'form':form})
 
 def signup2(request):
-    #handles once the signup form is submitted 
+    #handles once the signup form is submitted
     if request.method == 'POST':
         form1 = SignUpForm(request.POST)
         form2 = SignUpForm2(request.POST)
@@ -81,28 +80,62 @@ def search(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
     job_list = Job.objects.order_by('job_title')[:5]
+    applicant_list = Applicant.objects.order_by('applicant_last_name')[:5]
+
     #handles searching for jobs
     if request.method == 'POST':
-        search = request.POST['search']
-        form1 = SearchJobForm(request.POST)
-        if search:
-            job_results = Job.objects.filter(Q(job_title__icontains = search) | Q(job_qualifications__icontains = search))
-            if job_results:
-                #checks to see if applicant is employer because it will not display if they are not
-                try:
-                    employee = Employee.objects.get(employee_email = applicant.applicant_email)
-                    return render(request, 'polls/search.html', {'applicant': applicant, 'form1':form1, 'employee':employee, 'job_list': job_list, 'job_results': job_results})
-                except Employee.DoesNotExist:
-                    return render(request, 'polls/search.html', {'applicant': applicant, 'form1': form1, 'job_list': job_list, 'job_results': job_results})
+        if 'searchjobform' in request.POST:
+            search = request.POST['search']
+            form1 = SearchJobForm(request.POST)
+            if form1.is_valid():
+                job_results = Job.objects.filter(Q(job_title__icontains = search) | Q(job_qualifications__icontains = search))
+                if job_results:
+                    #checks to see if applicant is employer because it will not display if they are not
+                    try:
+                        form2 = SearchApplicantForm()
+                        form3= ApplyForm()
+                        employee = Employee.objects.get(employee_email = applicant.applicant_email)
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_list':applicant_list, 'form1':form1, 'form3':form3, 'form2':form2, 'employee':employee, 'job_list': job_list, 'job_results': job_results})
+                    except Employee.DoesNotExist:
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_list':applicant_list, 'form1': form1, 'form3':form3, 'form2':form2, 'job_list': job_list, 'job_results': job_results})
+        elif 'searchapplicantform' in request.POST:
+            search = request.POST['search']
+            form2 = SearchApplicantForm(request.POST)
+            if form2.is_valid():
+                applicant_results_priority = Applicant.objects.filter(Q(applicant_last_name = search) | Q(applicant_resume__icontains = search))
+                if applicant_results:
+                    try:
+                        form1=SearchJobForm()
+                        form3=ApplyForm()
+                        employee = Employee.objects.get(employee_email = applicant.applicant_email)
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1':form1, 'employee':employee, 'job_list': job_list, 'job_results': job_results})
+                    except Employee.DoesNotExist:
+                        return render(request, 'polls/search.html', {'applicant': applicant, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1': form1, 'job_list': job_list, 'job_results': job_results})
+        elif 'applyform' in request.POST:
+            form3 = ApplyForm(request.POST)
+            if form3.is_valid():
+                job_id = form3.cleaned_data['job_id']
+                q = Job.objects.get(pk = job_id)
+                applicant.applicant_job.add(q)
+            try:
+                employee = Employee.objects.get(employee_email = applicant.applicant_email)
+                return redirect('/search/'+str(applicant_id))
+            except Employee.DoesNotExist:
+                return redirect('/search/'+str(applicant_id))
+
     #checks to see if applicant is employer because it will not display if they are not
     try:
-        form = ApplyForm()
+        form3 = ApplyForm()
+        form1 = SearchJobForm()
+        form2 = SearchApplicantForm()
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
         form1 = SearchJobForm()
-        return render(request, 'polls/search.html', {'applicant': applicant, 'form1':form1, 'employee':employee, 'job_list': job_list})
+        return render(request, 'polls/search.html', {'applicant': applicant, 'applicant_list':applicant_list, 'form2':form2, 'form3': form3, 'form1':form1, 'employee':employee, 'job_list': job_list})
     except Employee.DoesNotExist:
-        form1=SearchJobForm()
-        return render(request, 'polls/search.html', {'applicant': applicant, 'form1':form1, 'job_list': job_list})
+        form3 = ApplyForm()
+        form1 = SearchJobForm()
+        form2 = SearchApplicantForm()
+        return render(request, 'polls/search.html', {'applicant': applicant,'applicant_list':applicant_list, 'form2':form2, 'form3': form3, 'form1':form1, 'job_list': job_list})
 
 def home(request, applicant_id):
     realId = decrypt(applicant_id)
@@ -136,7 +169,7 @@ def profile(request, applicant_id):
     try:
         employee = Employee.objects.get(employee_email = applicant.applicant_email)
         form = MessageForm()
-        try: 
+        try:
             messages = Message.objects.filter(receiver_email = applicant.applicant_email)
             form = MessageForm()
             return render(request, 'polls/profile.html', {'applicant': applicant, 'employee':employee, 'messages': messages, 'form':form})
@@ -156,7 +189,7 @@ def editProfile(request, applicant_id):
     realId = decrypt(applicant_id)
     applicant = get_object_or_404(Applicant, pk=realId)
     update = Applicant.objects.get(id = realId)
-    #handles the changes to the profile once the editprofile page is submitted 
+    #handles the changes to the profile once the editprofile page is submitted
     if request.method == 'POST':
         form = editProfileForm(request.POST, instance=update)
         if form.is_valid():
@@ -171,8 +204,8 @@ def editProfile(request, applicant_id):
     else:
         form = editProfileForm(instance=update)
         return render(request, 'polls/editProfile.html', {'applicant': applicant, 'form':form})
-        
-        
+
+
 #encryption (id * 59) + 36 ) * 120 ) - 14 ) * 298)
 
 def decrypt(did):
@@ -180,4 +213,4 @@ def decrypt(did):
     realid = ((((decryptid / 298) + 14) / 120) - 36) / 59
     return realid
 
-    
+
