@@ -85,7 +85,7 @@
     {% if app_Count %}
      <ul>
          {% for app in app_Count|slice:":1" %}
-        <caption>Job Field with the Greatest Number of Applicants: {% for i in app.applicant_job.all %}{{ i.job_title }}{% endfor %}</caption>
+        <caption>Job Field with the Greatest Number of Applicants: {{app.job_title}}</caption>
          {% endfor %}
      </ul>
       {% else %}
