@@ -160,20 +160,22 @@ def report(request, applicant_id):
     company_id = Company.objects.get(employee__employee_email=id)
     job_id = Job.objects.filter(job_company=company_id)
     applicant_loop = Applicant.objects.filter(applicant_job__in=job_id)
+    app_Count = applicant_loop.values('applicant_job').annotate(appCount=Count('applicant_job')).order_by('-appCount')
+    print(app_Count)
 
     applied = Applicant.objects.filter(applicant_job__isnull=False)
     company_all = Company.objects.filter(employee__employee_email__in=list(applied)).values('company_name').annotate(
-        ccount=Count('company_name'))
+        ccount=Count('company_name')).order_by('-ccount')[:4]
 
     job_most = applied.values('applicant_job').annotate(jcount=Count('applicant_job')).order_by('-jcount')[0]
     top = Applicant.objects.filter(application_status__exact='Hired').count()
     bottom = Applicant.objects.filter(applicant_job__isnull=False).count()
-    percent = top/bottom * 100
+    percent = round(top/bottom * 100,2)
 
 
     return render(request, 'polls/report.html', {'applicant': applicant, 'applied': applied, 'job_most': job_most,
                                                  'applicant_loop': applicant_loop, 'company_all': company_all,
-                                                 'percent': percent})
+                                                 'percent': percent, 'app_Count': app_Count})
 
 def profile(request, applicant_id):
     realId = decrypt(applicant_id)

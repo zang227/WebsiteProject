@@ -82,12 +82,19 @@
   <p></p>
   <h2><strong>Companies with Greatest Number of Applicants</strong></h2>
   <table style="width:70%" align="center"class = "table table-hover" class="w3-table w3-striped w3-bordered">
-
-    <caption>Job Field with the Greatest Number of Applicants: {{job_most.applicant_job}}</caption>
+    {% if app_Count %}
+     <ul>
+         {% for app in app_Count|slice:":1" %}
+        <caption>Job Field with the Greatest Number of Applicants: {% for i in app.applicant_job.all %}{{ i.job_title }}{% endfor %}</caption>
+         {% endfor %}
+     </ul>
+      {% else %}
+            <p>No applicants.</p>
+      {% endif %}
    <thead>
     <tr class="w3-theme">
-      <td>Company Name</td>
-      <td>Number of Applicants</td>
+      <th scope = 'col'>Company Name</th>
+      <th scope = 'col'>Number of Applicants</th>
     </tr>
    </thead>
     <tbody>
