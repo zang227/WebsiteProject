@@ -52,7 +52,6 @@ class Applicant(models.Model):
     application_status = models.CharField(max_length=100)
     applicant_is_employee = models.CharField(default="False",max_length=100)
     applicant_job = models.ManyToManyField('Job')
-    applicant_title = models.CharField(default='',max_length=1000)
     
     def __str__(self):
         return self.applicant_email
