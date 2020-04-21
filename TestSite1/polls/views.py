@@ -83,6 +83,10 @@ def search(request, applicant_id):
     job_list = Job.objects.order_by('job_title')[:5]
     applicant_list = Applicant.objects.order_by('applicant_last_name')[:5]
 
+    id = Applicant.objects.get(id=realId)
+    company_id = Company.objects.get(employee__employee_email=id)
+    job_id = Job.objects.filter(job_company=company_id)
+
     #handles searching for jobs
     if request.method == 'POST':
         if 'searchjobform' in request.POST:
@@ -104,8 +108,8 @@ def search(request, applicant_id):
             search = request.POST['search']
             form2 = SearchApplicantForm(request.POST)
             if form2.is_valid():
-                applicant_results_priority = Applicant.objects.filter((Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search)) & Q(applicant_is_employee__icontains = 'True'))
-                applicant_results = Applicant.objects.filter(Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search))
+                applicant_results_priority = Applicant.objects.filter((Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search)) & Q(applicant_is_employee__icontains = 'True') & Q(applicant_job__in=job_id))
+                applicant_results = Applicant.objects.filter((Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search)) & Q(applicant_job__in=job_id))
                 if applicant_results:
                     try:
                         form1=SearchJobForm()
