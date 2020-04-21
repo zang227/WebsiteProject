@@ -82,6 +82,11 @@ def search(request, applicant_id):
     applicant = get_object_or_404(Applicant, pk=realId)
     job_list = Job.objects.order_by('job_title')[:5]
     applicant_list = Applicant.objects.order_by('applicant_last_name')[:5]
+    this_id = applicant_id
+
+    id = Applicant.objects.get(id=realId)
+    company_id = Company.objects.get(employee__employee_email=id)
+    job_id = Job.objects.filter(job_company=company_id)
 
     #handles searching for jobs
     if request.method == 'POST':
@@ -104,8 +109,8 @@ def search(request, applicant_id):
             search = request.POST['search']
             form2 = SearchApplicantForm(request.POST)
             if form2.is_valid():
-                applicant_results_priority = Applicant.objects.filter((Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search)) & Q(applicant_is_employee__icontains = 'True'))
-                applicant_results = Applicant.objects.filter(Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search))
+                applicant_results_priority = Applicant.objects.filter((Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search)) & Q(applicant_is_employee__icontains = 'True') & Q(applicant_job__in=job_id))
+                applicant_results = Applicant.objects.filter((Q(applicant_last_name__icontains = search) | Q(applicant_resume__icontains = search)) & Q(applicant_job__in=job_id))
                 if applicant_results:
                     try:
                         form1=SearchJobForm()
@@ -116,17 +121,18 @@ def search(request, applicant_id):
                     except Employee.DoesNotExist:
                         return render(request, 'polls/search.html', {'applicant': applicant, 'form4':form4, 'applicant_results':applicant_results, 'applicant_results_priority':applicant_results_priority, 'form3':form3, 'form2':form2, 'applicant_list':applicant_list, 'form1': form1, 'job_list': job_list})
         elif 'accept' in request.POST: 
+            print("hiiiiiiiiiii")
             form4 = AcceptForm(request.POST)
             if form4.is_valid():
-                    applicant_id = form4.cleaned_data['applicant_id']
-                    t = Applicant.objects.get(pk = applicant_id)
+                    accept_id = form4.cleaned_data['applicant_id']
+                    t = Applicant.objects.get(pk = accept_id)
                     t.application_status = "Hired"
                     t.save()
             try:
                 employee = Employee.objects.get(employee_email = applicant.applicant_email)
-                return redirect('/search/'+str(applicant_id))
+                return redirect('/search/'+str(this_id))
             except Employee.DoesNotExist:
-                return redirect('/search/'+str(applicant_id))
+                return redirect('/search/'+str(this_id))
         elif 'applyform' in request.POST:
             form3 = ApplyForm(request.POST)
             if form3.is_valid():
@@ -136,18 +142,6 @@ def search(request, applicant_id):
                 t.save()
                 q = Job.objects.get(pk = job_id)
                 applicant.applicant_job.add(q)
-            try:
-                employee = Employee.objects.get(employee_email = applicant.applicant_email)
-                return redirect('/search/'+str(applicant_id))
-            except Employee.DoesNotExist:
-                return redirect('/search/'+str(applicant_id))
-        else: 
-            form4 = AcceptForm(request.POST)
-            if form4.is_valid():
-                    applicant_id = form4.cleaned_data['applicant_id']
-                    t = Applicant.objects.get(pk = applicant_id)
-                    t.application_status = "Hired"
-                    t.save()
             try:
                 employee = Employee.objects.get(employee_email = applicant.applicant_email)
                 return redirect('/search/'+str(applicant_id))
