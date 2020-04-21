@@ -214,11 +214,11 @@
 							</div>
 							<div class ="row m-3">
 								<div class="col">
-									<form method ="accept">
+									<form method ="post">
 										{% csrf_token %}
 										{{form4.as_p}}
 										<a id ="btn2" href="">
-											<input type ="submit" value="Accept" name="applyform"/>
+											<input type ="submit" value="Accept" name="accept"/>
 										</a>
 									</form>
 								</div>
